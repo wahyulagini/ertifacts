@@ -12,7 +12,9 @@ WORKDIR /app
 COPY . .
 
 RUN composer install --optimize-autoloader --no-dev
-RUN php artisan storage:link
+
+COPY start.sh /start.sh
+RUN chmod +x /start.sh
 
 EXPOSE 8080
-CMD php artisan migrate --force && php artisan serve --host 0.0.0.0 --port $PORT
+ENTRYPOINT ["/bin/sh", "/start.sh"]

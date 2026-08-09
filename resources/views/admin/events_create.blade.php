@@ -1,0 +1,80 @@
+@extends('layouts.dashboard')
+
+@section('title', 'Tambah Event')
+@section('page-title', 'Tambah Event Baru')
+@section('page-subtitle', 'Buat event baru untuk diselenggarakan di museum')
+
+@section('content')
+<div class="max-w-3xl bg-white rounded-2xl border border-brand-200 overflow-hidden">
+    <div class="px-5 py-4 border-b border-brand-100">
+        <h3 class="font-bold text-brand-800">Form Tambah Event</h3>
+    </div>
+    
+    <form action="{{ route('admin.events.store') }}" method="POST" enctype="multipart/form-data" class="p-6 space-y-5">
+        @csrf
+
+        <div>
+            <label class="block text-sm font-bold text-brand-700 mb-1">Judul Event</label>
+            <input type="text" name="judul_event" required class="w-full bg-brand-50 border border-brand-200 rounded-xl px-4 py-2 text-sm focus:ring-2 focus:ring-brand-400">
+            @error('judul_event') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
+        </div>
+
+        <div>
+            <label class="block text-sm font-bold text-brand-700 mb-1">Deskripsi</label>
+            <textarea name="deskripsi" rows="3" class="w-full bg-brand-50 border border-brand-200 rounded-xl px-4 py-2 text-sm focus:ring-2 focus:ring-brand-400"></textarea>
+            @error('deskripsi') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
+        </div>
+
+        <div class="grid grid-cols-2 gap-5">
+            <div>
+                <label class="block text-sm font-bold text-brand-700 mb-1">Tanggal Mulai</label>
+                <input type="date" name="tanggal_mulai" required class="w-full bg-brand-50 border border-brand-200 rounded-xl px-4 py-2 text-sm focus:ring-2 focus:ring-brand-400">
+                @error('tanggal_mulai') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
+            </div>
+            <div>
+                <label class="block text-sm font-bold text-brand-700 mb-1">Tanggal Selesai</label>
+                <input type="date" name="tanggal_selesai" required class="w-full bg-brand-50 border border-brand-200 rounded-xl px-4 py-2 text-sm focus:ring-2 focus:ring-brand-400">
+                @error('tanggal_selesai') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
+            </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-5">
+            <div>
+                <label class="block text-sm font-bold text-brand-700 mb-1">Lokasi Area</label>
+                <input type="text" name="lokasi_area" class="w-full bg-brand-50 border border-brand-200 rounded-xl px-4 py-2 text-sm focus:ring-2 focus:ring-brand-400" placeholder="Misal: Halaman Depan">
+            </div>
+            <div>
+                <label class="block text-sm font-bold text-brand-700 mb-1">Status</label>
+                <select name="status" required class="w-full bg-brand-50 border border-brand-200 rounded-xl px-4 py-2 text-sm focus:ring-2 focus:ring-brand-400">
+                    <option value="mendatang">Mendatang</option>
+                    <option value="berjalan">Berjalan</option>
+                    <option value="selesai">Selesai</option>
+                    <option value="dibatalkan">Dibatalkan</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-5">
+            <div>
+                <label class="block text-sm font-bold text-brand-700 mb-1">Kuota Tenant</label>
+                <input type="number" name="kuota_tenant" required min="1" class="w-full bg-brand-50 border border-brand-200 rounded-xl px-4 py-2 text-sm focus:ring-2 focus:ring-brand-400">
+            </div>
+            <div>
+                <label class="block text-sm font-bold text-brand-700 mb-1">Harga Sewa Booth</label>
+                <input type="number" name="harga_sewa_booth" required min="0" class="w-full bg-brand-50 border border-brand-200 rounded-xl px-4 py-2 text-sm focus:ring-2 focus:ring-brand-400">
+            </div>
+        </div>
+
+        <div>
+            <label class="block text-sm font-bold text-brand-700 mb-1">Gambar/Flyer Event (Opsional)</label>
+            <input type="file" name="gambar" accept="image/*" class="w-full bg-brand-50 border border-brand-200 rounded-xl px-4 py-2 text-sm focus:ring-2 focus:ring-brand-400">
+            @error('gambar') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
+        </div>
+
+        <div class="pt-4 flex justify-end gap-3 border-t border-brand-100">
+            <a href="{{ route('admin.events.index') }}" class="btn-outline px-5 py-2">Batal</a>
+            <button type="submit" class="btn-primary px-5 py-2">Simpan Event</button>
+        </div>
+    </form>
+</div>
+@endsection

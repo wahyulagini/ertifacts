@@ -78,7 +78,7 @@
             <!-- FORM -->
             <form action="{{ route('register.post') }}" method="POST" class="p-8 space-y-4">
                 @csrf
-                <input type="hidden" name="role" value="tenant">
+                <input type="hidden" name="role" value="Tenant">
 
                 <!-- Nama -->
                 <div class="space-y-1">
@@ -173,7 +173,7 @@
                         <label class="block text-xs font-display font-black uppercase tracking-wider">Nama Usaha</label>
                         <div class="relative">
                             <span class="absolute inset-y-0 left-0 flex items-center pl-3"><i class="fa-solid fa-store"></i></span>
-                            <input type="text" name="nama_tenant" value="{{ old('nama_tenant') }}" required
+                            <input type="text" name="nama_Tenant" value="{{ old('nama_Tenant') }}" required
                                 class="neo-input w-full pl-10 pr-4 py-2.5 bg-[#FCF8F2] text-sm font-semibold"
                                 placeholder="Nama toko / kafe Anda">
                         </div>

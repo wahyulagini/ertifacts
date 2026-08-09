@@ -5,9 +5,9 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration {
     public function up(): void {
-        Schema::create('pajak_tenant', function (Blueprint $table) {
+        Schema::create('pajak_Tenant', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('tenant_id')->constrained('tenants')->cascadeOnDelete();
+            $table->foreignId('Tenant_id')->constrained('Tenants')->cascadeOnDelete();
             $table->foreignId('transaksi_id')->constrained('transaksi')->cascadeOnDelete();
             $table->decimal('pendapatan_kotor', 14, 2);
             $table->decimal('persentase_pajak', 5, 2);
@@ -20,5 +20,5 @@ return new class extends Migration {
             $table->timestamps();
         });
     }
-    public function down(): void { Schema::dropIfExists('pajak_tenant'); }
+    public function down(): void { Schema::dropIfExists('pajak_Tenant'); }
 };

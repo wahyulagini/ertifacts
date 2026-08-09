@@ -2,7 +2,7 @@
 
 @section('title', 'Tiket Bantuan Tenant')
 @section('page-title', 'Tiket Bantuan')
-@section('page-subtitle', 'Kelola dan balas pertanyaan yang dikirim oleh tenant')
+@section('page-subtitle', 'Kelola dan balas pertanyaan yang dikirim oleh Tenant')
 
 @section('content')
 
@@ -32,7 +32,7 @@
     <div class="bg-white rounded-2xl border border-brand-200 overflow-hidden hover:shadow-md transition-all">
         <div class="flex items-start gap-4 p-5">
             <div class="w-10 h-10 rounded-xl bg-brand-100 flex items-center justify-center text-brand-600 font-bold text-sm shrink-0">
-                {{ strtoupper(substr($tiket->tenant->nama_tenant ?? 'T', 0, 1)) }}
+                {{ strtoupper(substr($tiket->Tenant->nama_Tenant ?? 'T', 0, 1)) }}
             </div>
             <div class="flex-1 min-w-0">
                 <div class="flex items-center gap-2 flex-wrap mb-1">
@@ -54,7 +54,7 @@
                     <span class="badge {{ $badge }}">{{ $label }}</span>
                 </div>
                 <p class="text-xs text-brand-400 mb-2">
-                    <i class="fa-solid fa-store mr-1"></i>{{ $tiket->tenant->nama_tenant ?? '-' }} &nbsp;·&nbsp;
+                    <i class="fa-solid fa-store mr-1"></i>{{ $tiket->Tenant->nama_Tenant ?? '-' }} &nbsp;·&nbsp;
                     <i class="fa-regular fa-clock mr-1"></i>{{ $tiket->created_at->translatedFormat('d M Y, H:i') }}
                 </p>
                 <p class="text-sm text-brand-600 leading-relaxed bg-brand-50 rounded-xl px-4 py-3">{{ $tiket->pesan }}</p>
@@ -81,7 +81,7 @@
                     </label>
                     <textarea name="balasan" rows="3"
                         class="w-full border-2 border-brand-200 rounded-xl px-4 py-2.5 text-sm focus:border-brand-gold focus:outline-none resize-none"
-                        placeholder="Ketik balasan untuk tenant...">{{ old('balasan', $tiket->balasan_admin) }}</textarea>
+                        placeholder="Ketik balasan untuk Tenant...">{{ old('balasan', $tiket->balasan_admin) }}</textarea>
                 </div>
                 <div class="flex items-center gap-2">
                     <button type="submit" class="btn-primary text-xs py-2 px-4">
@@ -107,7 +107,7 @@
     <div class="bg-white rounded-2xl border border-brand-200 py-20 flex flex-col items-center text-center">
         <i class="fa-solid fa-headset text-4xl text-brand-200 mb-4"></i>
         <p class="font-bold text-brand-600">Belum ada tiket bantuan masuk</p>
-        <p class="text-xs text-brand-400 mt-1">Tiket akan muncul saat tenant mengirim pertanyaan atau keluhan.</p>
+        <p class="text-xs text-brand-400 mt-1">Tiket akan muncul saat Tenant mengirim pertanyaan atau keluhan.</p>
     </div>
     @endforelse
 </div>

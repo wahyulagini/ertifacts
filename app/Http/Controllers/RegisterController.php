@@ -29,14 +29,14 @@ class RegisterController extends Controller
             'name'     => ['required', 'string', 'max:150'],
             'email'    => ['required', 'email', 'unique:users,email'],
             'phone'    => ['nullable', 'string', 'max:20'],
-            // ✅ Hanya terima 'pengunjung' atau 'tenant' — BUKAN 'visitor' atau 'tenant'
-            'role'     => ['required', 'in:pengunjung,tenant'],
+            // ✅ Hanya terima 'pengunjung' atau 'Tenant' — BUKAN 'visitor' atau 'Tenant'
+            'role'     => ['required', 'in:pengunjung,Tenant'],
             'password' => ['required', 'confirmed', Password::min(8)],
         ];
 
-        if ($request->role === 'tenant') {
+        if ($request->role === 'Tenant') {
             $rules['event_id']    = ['required', 'exists:events,id'];
-            $rules['nama_tenant'] = ['required', 'string', 'max:150'];
+            $rules['nama_Tenant'] = ['required', 'string', 'max:150'];
             $rules['jenis_usaha'] = ['required', 'string', 'max:100'];
             $rules['deskripsi']   = ['nullable', 'string', 'max:500'];
         }
@@ -46,13 +46,13 @@ class RegisterController extends Controller
             'email.required'        => 'Email wajib diisi.',
             'email.unique'          => 'Email sudah terdaftar.',
             'role.required'         => 'Pilih jenis akun.',
-            'role.in'               => 'Jenis akun tidak valid. Pilih Pengunjung atau tenant.',
+            'role.in'               => 'Jenis akun tidak valid. Pilih Pengunjung atau Tenant.',
             'password.required'     => 'Kata sandi wajib diisi.',
             'password.confirmed'    => 'Konfirmasi sandi tidak cocok.',
             'password.min'          => 'Kata sandi minimal 8 karakter.',
-            'event_id.required'     => 'Anda harus memilih event untuk mendaftar sebagai tenant.',
+            'event_id.required'     => 'Anda harus memilih event untuk mendaftar sebagai Tenant.',
             'event_id.exists'       => 'Event yang dipilih tidak valid.',
-            'nama_tenant.required'  => 'Nama usaha wajib diisi.',
+            'nama_Tenant.required'  => 'Nama usaha wajib diisi.',
             'jenis_usaha.required'  => 'Jenis usaha wajib dipilih.',
         ]);
 
@@ -65,12 +65,12 @@ class RegisterController extends Controller
             'password' => Hash::make($validated['password']),
         ]);
 
-        // Kalau tenant → simpan ke tabel tenants
-        if ($validated['role'] === 'tenant') {
+        // Kalau Tenant → simpan ke tabel Tenants
+        if ($validated['role'] === 'Tenant') {
             Tenant::create([
                 'user_id'          => $user->id,
                 'event_id'         => $validated['event_id'],
-                'nama_tenant'      => $validated['nama_tenant'],
+                'nama_Tenant'      => $validated['nama_Tenant'],
                 'jenis_usaha'      => $validated['jenis_usaha'],
                 'deskripsi'        => $request->deskripsi ?? null,
                 'lokasi_di_museum' => $request->lokasi_di_museum ?? null,
@@ -82,8 +82,8 @@ class RegisterController extends Controller
         Auth::login($user);
 
         return $this->redirectByRole($user->role)
-            ->with('success', $user->role === 'tenant'
-                ? 'Akun tenant berhasil dibuat! Menunggu persetujuan admin.'
+            ->with('success', $user->role === 'Tenant'
+                ? 'Akun Tenant berhasil dibuat! Menunggu persetujuan admin.'
                 : 'Selamat datang di E-RTIFACT, ' . $user->name . '!'
             );
     }
@@ -99,10 +99,10 @@ class RegisterController extends Controller
             'name'             => ['required', 'string', 'max:150'],
             'email'            => ['required', 'email', 'unique:users,email'],
             'phone'            => ['nullable', 'string', 'max:20'],
-            'role'             => ['required', 'in:pengunjung,tenant,admin'],
+            'role'             => ['required', 'in:pengunjung,Tenant,admin'],
             'password'         => ['required', Password::min(8)],
-            'nama_tenant'      => ['required_if:role,tenant', 'nullable', 'string', 'max:150'],
-            'jenis_usaha'      => ['required_if:role,tenant', 'nullable', 'string', 'max:100'],
+            'nama_Tenant'      => ['required_if:role,Tenant', 'nullable', 'string', 'max:150'],
+            'jenis_usaha'      => ['required_if:role,Tenant', 'nullable', 'string', 'max:100'],
             'tarif_sewa'       => ['nullable', 'numeric', 'min:0'],
             'persentase_pajak' => ['nullable', 'numeric', 'min:0', 'max:100'],
         ]);
@@ -115,10 +115,10 @@ class RegisterController extends Controller
             'password' => Hash::make($validated['password']),
         ]);
 
-        if ($validated['role'] === 'tenant') {
+        if ($validated['role'] === 'Tenant') {
             Tenant::create([
                 'user_id'          => $user->id,
-                'nama_tenant'      => $validated['nama_tenant'],
+                'nama_Tenant'      => $validated['nama_Tenant'],
                 'jenis_usaha'      => $validated['jenis_usaha'],
                 'tarif_sewa'       => $validated['tarif_sewa'] ?? 0,
                 'persentase_pajak' => $validated['persentase_pajak'] ?? 10.00,
@@ -135,7 +135,7 @@ class RegisterController extends Controller
     {
         return match($role) {
             'admin'  => redirect()->route('admin.dashboard'),
-            'tenant'  => redirect()->route('tenant.dashboard'),
+            'Tenant'  => redirect()->route('Tenant.dashboard'),
             default  => redirect()->route('pengunjung.dashboard'),
         };
     }

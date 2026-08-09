@@ -24,12 +24,12 @@ class User extends Authenticatable
 
     // Role helpers
     public function isAdmin()      { return $this->role === 'admin'; }
-    public function istenant()      { return $this->role === 'tenant'; }
+    public function isTenant()      { return $this->role === 'Tenant'; }
     public function isPengunjung() { return $this->role === 'pengunjung'; }
 
     // Relasi
     public function reservasi()  { return $this->hasMany(Reservasi::class); }
-    public function tenant()     { return $this->hasOne(Tenant::class); }   // ✅ hasOne Tenant
+    public function Tenant()     { return $this->hasOne(Tenant::class); }   // ✅ hasOne Tenant
     public function transaksi()  { return $this->hasMany(Transaksi::class); }
 
     // Accessor foto

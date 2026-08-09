@@ -45,8 +45,8 @@
                  'Tentu saja! Museum kami menerima kunjungan rombongan dari sekolah, instansi, dan komunitas. Silakan isi jumlah orang saat mengisi Buku Tamu. Untuk rombongan besar (> 50 orang), kami sarankan mengirim tiket bantuan terlebih dahulu agar kami bisa menyiapkan fasilitas terbaik.'],
                 ['Apa itu E-RTIFACT?',
                  'E-RTIFACT adalah Sistem Informasi Kearsipan Budaya Lhokseumawe — sebuah platform digital yang memadukan pelestarian sejarah Aceh dengan teknologi modern. Kami mengelola koleksi artefak, arsip sejarah, tokoh penting, dan peta lokasi bersejarah secara digital dan interaktif.'],
-                ['Bagaimana cara menjadi tenant di event museum?',
-                 'Untuk menjadi tenant di event museum, daftarkan akun Anda melalui halaman Registrasi, lalu pilih event yang tersedia. Admin akan meninjau permohonan Anda dan memberikan keputusan dalam 1×24 jam kerja.'],
+                ['Bagaimana cara menjadi Tenant di event museum?',
+                 'Untuk menjadi Tenant di event museum, daftarkan akun Anda melalui halaman Registrasi, lalu pilih event yang tersedia. Admin akan meninjau permohonan Anda dan memberikan keputusan dalam 1×24 jam kerja.'],
                 ['Apakah tiket bisa direfund?',
                  'Saat ini kami belum menyediakan fasilitas refund otomatis. Jika ada kendala, silakan kirim tiket bantuan melalui formulir di bawah ini, dan tim admin kami akan membantu menyelesaikan masalah Anda.'],
             ] as $i => [$q, $a])

@@ -5,9 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Reservasi;
-use App\Models\tenant;
+use App\Models\Tenant;
 use App\Models\Transaksi;
-use App\Models\Pajaktenant;
+use App\Models\PajakTenant;
 use App\Models\User;
 use App\Models\Artefak;
 use App\Models\TokohPenting;
@@ -56,39 +56,39 @@ class AdminController extends Controller
     return back()->with('success', "Reservasi #{$r->kode_booking} ditandai selesai.");
     }
 
-    // ── tenant ─────────────────────────────────────────────────
-   public function tenant()
+    // ── Tenant ─────────────────────────────────────────────────
+   public function Tenant()
 {
-    $tenants = tenant::with('user')->latest()->paginate(15);
+    $Tenants = Tenant::with('user')->latest()->paginate(15);
     $stats = [
-        'menunggu' => tenant::where('status','menunggu')->count(),
-        'aktif'    => tenant::where('status','aktif')->count(),
-        'ditolak'  => tenant::where('status','ditolak')->count(),
+        'menunggu' => Tenant::where('status','menunggu')->count(),
+        'aktif'    => Tenant::where('status','aktif')->count(),
+        'ditolak'  => Tenant::where('status','ditolak')->count(),
     ];
-    return view('admin.tenant', compact('tenants','stats'));  // ✅
+    return view('admin.Tenant', compact('Tenants','stats'));  // ✅
 }
 
-    public function setujutenant(Request $request, $id)
+    public function setujuTenant(Request $request, $id)
     {
         $request->validate([
             'tarif_sewa'       => ['required','numeric','min:0'],
             'persentase_pajak' => ['required','numeric','min:0','max:100'],
         ]);
 
-        $tenant = tenant::findOrFail($id);
-        $tenant->update([
+        $Tenant = Tenant::findOrFail($id);
+        $Tenant->update([
             'status'           => 'aktif',
             'tarif_sewa'       => $request->tarif_sewa,
             'persentase_pajak' => $request->persentase_pajak,
             'catatan_admin'    => $request->catatan,
             'disetujui_pada'   => now(),
         ]);
-        // Ubah role user jadi tenant
-        $tenant->user->update(['role' => 'tenant']);
+        // Ubah role user jadi Tenant
+        $Tenant->user->update(['role' => 'Tenant']);
 
         // Generate tagihan sewa pertama
         \App\Models\PajakTenant::create([
-            'tenant_id'         => $tenant->id,
+            'Tenant_id'         => $Tenant->id,
             'transaksi_id'      => null,
             'pendapatan_kotor'  => 0,
             'persentase_pajak'  => 0,
@@ -99,23 +99,23 @@ class AdminController extends Controller
             'catatan'           => 'Tagihan sewa booth event bulan ' . now()->translatedFormat('F Y'),
         ]);
 
-        return back()->with('success', "tenant {$tenant->nama_tenant} disetujui dan tagihan sewa telah dibuat.");
+        return back()->with('success', "Tenant {$Tenant->nama_Tenant} disetujui dan tagihan sewa telah dibuat.");
     }
 
-    public function tolaktenant(Request $request, $id)
+    public function tolakTenant(Request $request, $id)
     {
-        $tenant = tenant::findOrFail($id);
-        $tenant->update([
+        $Tenant = Tenant::findOrFail($id);
+        $Tenant->update([
             'status'        => 'ditolak',
             'catatan_admin' => $request->catatan ?? 'Permohonan ditolak.',
         ]);
-        return back()->with('success', "tenant {$tenant->nama_tenant} ditolak.");
+        return back()->with('success', "Tenant {$Tenant->nama_Tenant} ditolak.");
     }
 
     // ── Pajak Tenant ──────────────────────────────────────────
 public function pajak(Request $request)
 {
-    $query = PajakTenant::with('tenant.user');
+    $query = PajakTenant::with('Tenant.user');
 
     if ($request->filled('status')) {
         $query->where('status_bayar', $request->status);
@@ -160,7 +160,7 @@ public function konfirmasiPajak(Request $request, $id)
                 'catatan'      => $request->catatan ?? 'Bukti pembayaran tidak valid, silakan upload ulang.',
     ]);
 
-    return back()->with('success', "Bukti pembayaran ditolak, tenant diminta upload ulang.");
+    return back()->with('success', "Bukti pembayaran ditolak, Tenant diminta upload ulang.");
     }
 
     // ── Koleksi E-RTIFACT ─────────────────────────────────────
@@ -338,8 +338,8 @@ public function konfirmasiPajak(Request $request, $id)
         $bulan = now()->month;
         $tahun = now()->year;
 
-        // ── Query tabel transaksi (sewa, pajak tenant, dll) ──────────────
-        $queryTransaksi = Transaksi::with(['user','tenant']);
+        // ── Query tabel transaksi (sewa, pajak Tenant, dll) ──────────────
+        $queryTransaksi = Transaksi::with(['user','Tenant']);
         if ($request->filled('jenis') && $request->jenis !== 'Tiket Pengunjung') {
             $queryTransaksi->where('jenis_transaksi', $request->jenis);
         }
@@ -384,7 +384,7 @@ public function konfirmasiPajak(Request $request, $id)
         $transaksiMapped = $transaksiRows->map(fn($t) => (object)[
             'kode_transaksi'  => $t->kode_transaksi,
             'jenis_transaksi' => $t->jenis_transaksi,
-            'sumber'          => $t->tenant->nama_tenant ?? $t->user->name ?? '-',
+            'sumber'          => $t->Tenant->nama_Tenant ?? $t->user->name ?? '-',
             'created_at'      => $t->created_at,
             'status_bayar'    => $t->status_bayar,
             'jumlah'          => $t->jumlah,
@@ -408,14 +408,14 @@ public function konfirmasiPajak(Request $request, $id)
             ->whereMonth('created_at', $bulan)->whereYear('created_at', $tahun)
             ->sum('total_harga');
 
-        $sewa_bulan = Transaksi::where('jenis_transaksi','Sewa Tempat tenant')
+        $sewa_bulan = Transaksi::where('jenis_transaksi','Sewa Tempat Tenant')
             ->where('status_bayar','lunas')
             ->whereMonth('created_at', $bulan)->whereYear('created_at', $tahun)->sum('jumlah');
 
         $pajak_bulan = PajakTenant::where('status_bayar','sudah_bayar')
             ->whereMonth('created_at', $bulan)->whereYear('created_at', $tahun)->sum('nominal_pajak');
 
-        $pendapatan_tenant_kotor = Transaksi::where('jenis_transaksi','Pendapatan tenant')
+        $pendapatan_Tenant_kotor = Transaksi::where('jenis_transaksi','Pendapatan Tenant')
             ->where('status_bayar','lunas')
             ->whereMonth('created_at', $bulan)->whereYear('created_at', $tahun)->sum('jumlah');
 
@@ -424,7 +424,7 @@ public function konfirmasiPajak(Request $request, $id)
             'sewa_bulan'              => $sewa_bulan,
             'pajak_bulan'             => $pajak_bulan,
             'total_bulan'             => $tiket_bulan + $sewa_bulan + $pajak_bulan,
-            'pendapatan_tenant_kotor' => $pendapatan_tenant_kotor,
+            'pendapatan_Tenant_kotor' => $pendapatan_Tenant_kotor,
         ];
 
         // ── Tren 6 bulan terakhir ────────────────────────────────────────
@@ -434,7 +434,7 @@ public function konfirmasiPajak(Request $request, $id)
             $tiket = BukuTamu::where('status_bayar', 'lunas')
                 ->whereMonth('created_at', $bln->month)->whereYear('created_at', $bln->year)
                 ->sum('total_harga');
-            $sewa  = Transaksi::where('jenis_transaksi','Sewa Tempat tenant')->where('status_bayar','lunas')
+            $sewa  = Transaksi::where('jenis_transaksi','Sewa Tempat Tenant')->where('status_bayar','lunas')
                 ->whereMonth('created_at', $bln->month)->whereYear('created_at', $bln->year)->sum('jumlah');
             $pajak = PajakTenant::where('status_bayar','sudah_bayar')
                 ->whereMonth('created_at', $bln->month)->whereYear('created_at', $bln->year)->sum('nominal_pajak');
@@ -450,7 +450,7 @@ public function konfirmasiPajak(Request $request, $id)
 
     public function users(Request $request)
     {
-        $users = \App\Models\User::with('tenant')->latest()->paginate(10);
+        $users = \App\Models\User::with('Tenant')->latest()->paginate(10);
         return view('admin.users', compact('users'));
     }
 
@@ -480,7 +480,7 @@ public function konfirmasiPajak(Request $request, $id)
             'tanggal_mulai' => ['required','date'],
             'tanggal_selesai' => ['required','date','after_or_equal:tanggal_mulai'],
             'lokasi_area' => ['nullable','string','max:100'],
-            'kuota_tenant' => ['required','integer','min:0'],
+            'kuota_Tenant' => ['required','integer','min:0'],
             'harga_sewa_booth' => ['required','numeric','min:0'],
             'status' => ['required','in:mendatang,berjalan,selesai,dibatalkan'],
             'gambar' => ['nullable','image','mimes:jpg,jpeg,png','max:2048'],
@@ -678,7 +678,7 @@ public function konfirmasiPajak(Request $request, $id)
             'tanggal_mulai'    => ['required','date'],
             'tanggal_selesai'  => ['required','date','after_or_equal:tanggal_mulai'],
             'lokasi_area'      => ['nullable','string','max:100'],
-            'kuota_tenant'     => ['required','integer','min:0'],
+            'kuota_Tenant'     => ['required','integer','min:0'],
             'harga_sewa_booth' => ['required','numeric','min:0'],
             'status'           => ['required','in:mendatang,berjalan,selesai,dibatalkan'],
             'gambar'           => ['nullable','image','mimes:jpg,jpeg,png','max:2048'],
@@ -702,7 +702,7 @@ public function konfirmasiPajak(Request $request, $id)
     // ── Tiket Bantuan ────────────────────────────────────────────
     public function tiketBantuan()
     {
-        $tikets = TiketBantuan::with('tenant')
+        $tikets = TiketBantuan::with('Tenant')
             ->latest()
             ->paginate(20);
         $stats = [

@@ -27,7 +27,7 @@
             background-image:linear-gradient(to right,rgba(61,37,22,.04) 1px,transparent 1px),
                              linear-gradient(to bottom,rgba(61,37,22,.04) 1px,transparent 1px);
         }
-        #tenant-fields { display:none; }
+        #Tenant-fields { display:none; }
     </style>
 </head>
 <body class="bg-[#FCF8F2] text-[#3D2516] font-sans bg-grid min-h-screen flex flex-col justify-center py-12 px-4">
@@ -45,13 +45,13 @@
     {{-- CARD --}}
     <div class="neo-card bg-white overflow-hidden">
 
-        {{-- ROLE TABS — value harus 'pengunjung' dan 'tenant' --}}
+        {{-- ROLE TABS — value harus 'pengunjung' dan 'Tenant' --}}
         <div class="grid grid-cols-2 border-b-4 border-[#3D2516] text-center font-display font-black text-xs uppercase tracking-wider">
             <button type="button" onclick="selectRole('pengunjung')" id="tab-pengunjung"
                 class="role-tab py-4 border-r-4 border-[#3D2516] bg-[#D4AF37] text-[#3D2516] flex flex-col items-center gap-1">
                 <i class="fa-solid fa-ticket text-sm"></i> Pengunjung
             </button>
-            <button type="button" onclick="selectRole('tenant')" id="tab-tenant"
+            <button type="button" onclick="selectRole('Tenant')" id="tab-Tenant"
                 class="role-tab py-4 bg-[#FAF1E6] text-gray-400 flex flex-col items-center gap-1 hover:text-[#3D2516]">
                 <i class="fa-solid fa-store text-sm"></i> nant
             </button>
@@ -77,7 +77,7 @@
         <form action="{{ route('register.post') }}" method="POST" class="p-7 space-y-4">
             @csrf
 
-            {{-- ✅ KUNCI: value default 'pengunjung' bukan 'visitor' atau 'tenant' --}}
+            {{-- ✅ KUNCI: value default 'pengunjung' bukan 'visitor' atau 'Tenant' --}}
             <input type="hidden" name="role" id="selected-role" value="{{ old('role','pengunjung') }}">
 
             {{-- Nama --}}
@@ -143,8 +143,8 @@
                 </div>
             </div>
 
-            {{-- DATA tenant (hidden by default) --}}
-            <div id="tenant-fields" class="space-y-3 border-t-2 border-dashed border-[#3D2516] pt-4">
+            {{-- DATA Tenant (hidden by default) --}}
+            <div id="Tenant-fields" class="space-y-3 border-t-2 border-dashed border-[#3D2516] pt-4">
                 <p class="text-xs font-display font-black uppercase tracking-wider text-amber-700 flex items-center gap-1.5">
                     <i class="fa-solid fa-store"></i> Data Usaha Tenant
                 </p>
@@ -153,8 +153,8 @@
                     <label class="block text-xs font-display font-black uppercase tracking-wider mb-1">Nama Usaha *</label>
                     <div class="relative">
                         <span class="absolute inset-y-0 left-3 flex items-center"><i class="fa-solid fa-store text-sm"></i></span>
-                        <input type="text" name="nama_tenant" value="{{ old('nama_tenant') }}"
-                            id="nama_tenant_input"
+                        <input type="text" name="nama_Tenant" value="{{ old('nama_Tenant') }}"
+                            id="nama_Tenant_input"
                             class="neo-input w-full pl-10 pr-4 py-2.5 bg-[#FCF8F2] text-sm font-semibold"
                             placeholder="Nama toko / kafe Anda">
                     </div>
@@ -202,7 +202,7 @@
 </div>
 
 <script>
-// ✅ role value: 'pengunjung' atau 'tenant' — sesuai enum di DB
+// ✅ role value: 'pengunjung' atau 'Tenant' — sesuai enum di DB
 function selectRole(role) {
     document.getElementById('selected-role').value = role;
 
@@ -214,22 +214,22 @@ function selectRole(role) {
     active.classList.remove('bg-[#FAF1E6]','text-gray-400');
     active.classList.add('bg-[#D4AF37]','text-[#3D2516]');
 
-    const tenantFields = document.getElementById('tenant-fields');
-    const namaTenant  = document.getElementById('nama_tenant_input');
+    const TenantFields = document.getElementById('Tenant-fields');
+    const namaTenant  = document.getElementById('nama_Tenant_input');
     const jenisTenant = document.getElementById('jenis_usaha_input');
     const btn         = document.getElementById('submit-btn');
     const wText       = document.getElementById('welcome-text');
     const wDesc       = document.getElementById('welcome-desc');
 
-    if (role === 'tenant') {
-        tenantFields.style.display = 'block';
+    if (role === 'Tenant') {
+        TenantFields.style.display = 'block';
         namaTenant.required  = true;
         jenisTenant.required = true;
-        wText.innerHTML = 'Mari Bertenant! ☕';
-        wDesc.innerHTML = 'Daftarkan usaha Anda sebagai tenant di dalam museum.';
-        btn.innerHTML   = 'Daftar Sebagai tenant <i class="fa-solid fa-shop ml-1.5"></i>';
+        wText.innerHTML = 'Mari BerTenant! ☕';
+        wDesc.innerHTML = 'Daftarkan usaha Anda sebagai Tenant di dalam museum.';
+        btn.innerHTML   = 'Daftar Sebagai Tenant <i class="fa-solid fa-shop ml-1.5"></i>';
     } else {
-        tenantFields.style.display = 'none';
+        TenantFields.style.display = 'none';
         namaTenant.required  = false;
         jenisTenant.required = false;
         wText.innerHTML = 'Halo Pengunjung Baru! 👋';

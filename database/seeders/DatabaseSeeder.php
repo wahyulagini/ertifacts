@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
-use App\Models\tenant;
+use App\Models\Tenant;
 
 class DatabaseSeeder extends Seeder
 {
@@ -22,22 +22,22 @@ class DatabaseSeeder extends Seeder
             ]
         );
 
-        // ── tenant ─────────────────────────────────────────────
-        $tenant = User::updateOrCreate(
-            ['email' => 'tenant@ertifact.id'],
+        // ── Tenant ─────────────────────────────────────────────
+        $Tenant = User::updateOrCreate(
+            ['email' => 'Tenant@ertifact.id'],
             [
                 'name'     => 'Budi Santoso',
                 'password' => Hash::make('password'),
-                'role'     => 'tenant',
+                'role'     => 'Tenant',
                 'phone'    => '08220000002',
             ]
         );
 
-        // Data tenant-nya (relasi user_id → tenants)
-        tenant::updateOrCreate(
-            ['user_id' => $tenant->id],
+        // Data Tenant-nya (relasi user_id → Tenants)
+        Tenant::updateOrCreate(
+            ['user_id' => $Tenant->id],
             [
-                'nama_tenant'      => 'Warung Kopi Pasai',
+                'nama_Tenant'      => 'Warung Kopi Pasai',
                 'jenis_usaha'      => 'Kafe / Restoran',
                 'deskripsi'        => 'Kafe khas Aceh dengan menu kopi Gayo dan makanan tradisional Lhokseumawe.',
                 'lokasi_di_museum' => 'Lantai 1 - Sayap Barat',

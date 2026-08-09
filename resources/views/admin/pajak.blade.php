@@ -2,14 +2,14 @@
 
 @section('title', 'Pajak Tenant')
 @section('page-title', 'Pajak Tenant')
-@section('page-subtitle', 'Kelola dan konfirmasi pembayaran pajak operasional tenant')
+@section('page-subtitle', 'Kelola dan konfirmasi pembayaran pajak operasional Tenant')
 
  
 
 @section('content')
 <div class="mb-6">
     <h1 class="text-2xl font-bold text-brand-900">Pajak Tenant</h1>
-    <p class="text-brand-500 text-sm">Kelola dan konfirmasi pembayaran pajak operasional tenant</p>
+    <p class="text-brand-500 text-sm">Kelola dan konfirmasi pembayaran pajak operasional Tenant</p>
 </div>
 
 @if(session('success'))
@@ -82,8 +82,8 @@
             @forelse($pajak as $p)
                 <tr class="border-t border-brand-50">
                     <td class="px-5 py-3">
-                        <p class="font-semibold text-brand-800">{{ $p->tenant->nama_tenant ?? '-' }}</p>
-                        <p class="text-xs text-brand-400">{{ $p->tenant->user->name ?? '-' }}</p>
+                        <p class="font-semibold text-brand-800">{{ $p->Tenant->nama_Tenant ?? '-' }}</p>
+                        <p class="text-xs text-brand-400">{{ $p->Tenant->user->name ?? '-' }}</p>
                     </td>
                     <td class="px-5 py-3 text-brand-600">{{ $p->periode }}</td>
                     <td class="px-5 py-3 text-right text-brand-500">Rp {{ number_format($p->pendapatan_kotor, 0, ',', '.') }}</td>
@@ -125,7 +125,7 @@
                         @elseif($p->status_bayar === 'sudah_bayar')
                             <span class="text-xs text-emerald-500">✓ {{ $p->dibayar_pada?->translatedFormat('d M Y') }}</span>
                         @else
-                            <span class="text-xs text-brand-300">Menunggu tenant bayar</span>
+                            <span class="text-xs text-brand-300">Menunggu Tenant bayar</span>
                         @endif
                     </td>
                 </tr>
@@ -133,7 +133,7 @@
                 <tr>
                     <td colspan="7" class="text-center py-16">
                         <i class="fa-solid fa-file-invoice-dollar text-3xl text-brand-200 mb-2 block"></i>
-                        <p class="text-brand-400">Belum ada data pajak tenant</p>
+                        <p class="text-brand-400">Belum ada data pajak Tenant</p>
                     </td>
                 </tr>
             @endforelse

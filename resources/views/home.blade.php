@@ -91,7 +91,7 @@
         <div class="flex items-center gap-2 bg-[#FAF1E6] p-2 border-4 border-[#3D2516] shadow-[3px_3px_0px_0px_#3D2516]">
             <span class="text-xs font-black uppercase px-2">Akses Simulator:</span>
             <button onclick="switchRole('visitor')" id="btn-role-visitor" class="px-3 py-1 bg-[#D4AF37] border-2 border-[#3D2516] font-display font-extrabold text-xs uppercase">Visitor</button>
-            <button onclick="switchRole('tenant')" id="btn-role-tenant" class="px-3 py-1 bg-white border-2 border-[#3D2516] font-display font-extrabold text-xs uppercase">tenant</button>
+            <button onclick="switchRole('Tenant')" id="btn-role-Tenant" class="px-3 py-1 bg-white border-2 border-[#3D2516] font-display font-extrabold text-xs uppercase">Tenant</button>
             <button onclick="switchRole('admin')" id="btn-role-admin" class="px-3 py-1 bg-white border-2 border-[#3D2516] font-display font-extrabold text-xs uppercase">Admin</button>
         </div>
 
@@ -186,18 +186,18 @@
                 </div>
             </div>
 
-            <!-- Card 3: Info tenant / UMKM tenant Kompleks Museum -->
+            <!-- Card 3: Info Tenant / UMKM Tenant Kompleks Museum -->
             <div class="neo-card bg-[#3D2516] text-white p-6 flex flex-col justify-between">
                 <div>
-                    <span class="bg-[#D4AF37] text-[#3D2516] font-display font-black text-xs uppercase px-2 py-1 inline-block mb-3">tenant Museum</span>
-                    <h3 class="font-display text-2xl font-black uppercase text-[#D4AF37] mb-2">tenant & Kuliner</h3>
+                    <span class="bg-[#D4AF37] text-[#3D2516] font-display font-black text-xs uppercase px-2 py-1 inline-block mb-3">Tenant Museum</span>
+                    <h3 class="font-display text-2xl font-black uppercase text-[#D4AF37] mb-2">Tenant & Kuliner</h3>
                     <p class="text-xs text-gray-300 font-semibold mb-6">Nikmati kuliner khas nusantara dan souvenir dari stan UMKM binaan kami.</p>
                     
                     <div class="space-y-3">
-                        @forelse($tenants as $ten)
+                        @forelse($Tenants as $ten)
                             <div class="bg-white/10 p-3 border-2 border-white/20 flex justify-between items-center">
                                 <div>
-                                    <h4 class="font-bold text-sm text-white">{{ $ten->nama_tenant }}</h4>
+                                    <h4 class="font-bold text-sm text-white">{{ $ten->nama_Tenant }}</h4>
                                     <p class="text-[10px] text-gray-300 uppercase font-bold">Kategori: {{ $ten->jenis_usaha }}</p>
                                 </div>
                                 <span class="text-xs bg-[#D4AF37] text-black font-black px-2 py-0.5 border border-black rotate-[-1deg]">
@@ -262,23 +262,23 @@
         </div>
     </div>
 
-    <!-- ==================== PART 2: tenant VIEW ==================== -->
-    <div id="view-tenant" class="hidden space-y-8">
+    <!-- ==================== PART 2: Tenant VIEW ==================== -->
+    <div id="view-Tenant" class="hidden space-y-8">
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
             
-            <!-- Input Pendapatan Harian tenant -->
+            <!-- Input Pendapatan Harian Tenant -->
             <div class="neo-card bg-white p-6 lg:col-span-1">
                 <span class="bg-[#3D2516] text-white font-display font-black text-xs uppercase px-2 py-1 inline-block mb-3">Laporan Omset</span>
                 <h3 class="font-display text-2xl font-black uppercase mb-2">Input Kas Harian</h3>
                 <p class="text-xs text-[#8B5E3C] font-semibold mb-6">Isi omset kotor penjualan harian kamu untuk dihitung pajaknya secara otomatis.</p>
                 
-                <form action="{{ route('tenant.sales') }}" method="POST" class="space-y-4">
+                <form action="{{ route('Tenant.sales') }}" method="POST" class="space-y-4">
                     @csrf
                     <div>
-                        <label class="block text-xs font-bold uppercase mb-1">Pilih Lapak tenant Kamu</label>
-                        <select name="tenant_id" class="neo-input w-full p-2.5 bg-[#FCF8F2] text-xs font-semibold" required>
-                            @foreach($tenants as $ten)
-                                <option value="{{ $ten->id }}">{{ $ten->nama_tenant }} (Milik: {{ $ten->owner_name }})</option>
+                        <label class="block text-xs font-bold uppercase mb-1">Pilih Lapak Tenant Kamu</label>
+                        <select name="Tenant_id" class="neo-input w-full p-2.5 bg-[#FCF8F2] text-xs font-semibold" required>
+                            @foreach($Tenants as $ten)
+                                <option value="{{ $ten->id }}">{{ $ten->nama_Tenant }} (Milik: {{ $ten->owner_name }})</option>
                             @endforeach
                         </select>
                     </div>
@@ -296,12 +296,12 @@
                 </form>
             </div>
 
-            <!-- Rekap Data Keuangan Seluruh tenant (Bagi Hasil Transparan) -->
+            <!-- Rekap Data Keuangan Seluruh Tenant (Bagi Hasil Transparan) -->
             <div class="neo-card bg-white p-6 lg:col-span-2">
                 <div class="flex justify-between items-center mb-6">
                     <div>
                         <h3 class="font-display text-2xl font-black uppercase">Arus Kas & Pajak Operasional</h3>
-                        <p class="text-xs text-[#8B5E3C] font-semibold">Semua tenant menyetor 10% dari omset harian untuk biaya pemeliharaan & kebersihan gedung museum.</p>
+                        <p class="text-xs text-[#8B5E3C] font-semibold">Semua Tenant menyetor 10% dari omset harian untuk biaya pemeliharaan & kebersihan gedung museum.</p>
                     </div>
                 </div>
 
@@ -310,10 +310,10 @@
                         <thead>
                             <tr class="bg-[#FAF1E6] border-b-4 border-[#3D2516] text-xs font-black uppercase">
                                 <th class="p-3 w-12 text-center border-r-2 border-[#3D2516]">No</th>
-                                <th class="p-3 border-r-2 border-[#3D2516]">Nama tenant</th>
+                                <th class="p-3 border-r-2 border-[#3D2516]">Nama Tenant</th>
                                 <th class="p-3 border-r-2 border-[#3D2516]">Omset Kotor</th>
                                 <th class="p-3 border-r-2 border-[#3D2516]">Pajak Operasional (10%)</th>
-                                <th class="p-3 border-r-2 border-[#3D2516]">Bersih tenant</th>
+                                <th class="p-3 border-r-2 border-[#3D2516]">Bersih Tenant</th>
                                 <th class="p-3">Tanggal Setor</th>
                             </tr>
                         </thead>
@@ -321,7 +321,7 @@
                             @forelse($sales as $index => $sal)
                                 <tr class="hover:bg-[#FCF8F2]">
                                     <td class="p-3 text-center border-r-2 border-[#3D2516]">{{ $index + 1 }}</td>
-                                    <td class="p-3 border-r-2 border-[#3D2516] font-bold">{{ $sal->nama_tenant }}</td>
+                                    <td class="p-3 border-r-2 border-[#3D2516] font-bold">{{ $sal->nama_Tenant }}</td>
                                     <td class="p-3 border-r-2 border-[#3D2516] text-gray-500">Rp {{ number_format($sal->total_omset, 0, ',', '.') }}</td>
                                     <td class="p-3 border-r-2 border-[#3D2516] text-red-600 font-bold">Rp {{ number_format($sal->jumlah_pajak, 0, ',', '.') }}</td>
                                     <td class="p-3 border-r-2 border-[#3D2516] text-emerald-600 font-bold">Rp {{ number_format($sal->pendapatan_bersih, 0, ',', '.') }}</td>
@@ -349,7 +349,7 @@
             <div class="neo-card bg-[#D4AF37] text-black p-6">
                 <span class="text-xs uppercase font-black">Pendapatan Operasional Museum</span>
                 <h3 class="font-display text-4xl font-black mt-2">Rp {{ number_format($totalTaxCollected, 0, ',', '.') }}</h3>
-                <p class="text-[10px] uppercase font-bold mt-1 text-[#3D2516]">Sumber Dana: 10% Pajak Bagi Hasil tenant Lapak UMKM</p>
+                <p class="text-[10px] uppercase font-bold mt-1 text-[#3D2516]">Sumber Dana: 10% Pajak Bagi Hasil Tenant Lapak UMKM</p>
             </div>
 
             <div class="neo-card bg-[#FAF1E6] p-6">
@@ -458,21 +458,21 @@
     function switchRole(role) {
         // Sembunyikan semua views
         document.getElementById('view-visitor').classList.add('hidden');
-        document.getElementById('view-tenant').classList.add('hidden');
+        document.getElementById('view-Tenant').classList.add('hidden');
         document.getElementById('view-admin').classList.add('hidden');
 
         // Reset warna tombol tab
         document.getElementById('btn-role-visitor').className = 'px-3 py-1 bg-white border-2 border-[#3D2516] font-display font-extrabold text-xs uppercase';
-        document.getElementById('btn-role-tenant').className = 'px-3 py-1 bg-white border-2 border-[#3D2516] font-display font-extrabold text-xs uppercase';
+        document.getElementById('btn-role-Tenant').className = 'px-3 py-1 bg-white border-2 border-[#3D2516] font-display font-extrabold text-xs uppercase';
         document.getElementById('btn-role-admin').className = 'px-3 py-1 bg-white border-2 border-[#3D2516] font-display font-extrabold text-xs uppercase';
 
         // Tampilkan view yang aktif & ubah warna tombolnya
         if (role === 'visitor') {
             document.getElementById('view-visitor').classList.remove('hidden');
             document.getElementById('btn-role-visitor').className = 'px-3 py-1 bg-[#D4AF37] border-2 border-[#3D2516] font-display font-extrabold text-xs uppercase';
-        } else if (role === 'tenant') {
-            document.getElementById('view-tenant').classList.remove('hidden');
-            document.getElementById('btn-role-tenant').className = 'px-3 py-1 bg-[#D4AF37] border-2 border-[#3D2516] font-display font-extrabold text-xs uppercase';
+        } else if (role === 'Tenant') {
+            document.getElementById('view-Tenant').classList.remove('hidden');
+            document.getElementById('btn-role-Tenant').className = 'px-3 py-1 bg-[#D4AF37] border-2 border-[#3D2516] font-display font-extrabold text-xs uppercase';
         } else if (role === 'admin') {
             document.getElementById('view-admin').classList.remove('hidden');
             document.getElementById('btn-role-admin').className = 'px-3 py-1 bg-[#D4AF37] border-2 border-[#3D2516] font-display font-extrabold text-xs uppercase';

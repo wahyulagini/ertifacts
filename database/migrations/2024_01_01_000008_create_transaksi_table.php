@@ -9,11 +9,11 @@ return new class extends Migration {
             $table->id();
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
             $table->foreignId('reservasi_id')->nullable()->constrained('reservasi')->nullOnDelete();
-            $table->foreignId('tenant_id')->nullable()->constrained('tenants')->nullOnDelete();
+            $table->foreignId('Tenant_id')->nullable()->constrained('Tenants')->nullOnDelete();
             $table->enum('jenis_transaksi', [
                 'Tiket Masuk','Tiket Rombongan',
                 'Biaya Peminjaman Artefak',
-                'Pendapatan tenant','Sewa Tempat tenant','Lainnya'
+                'Pendapatan Tenant','Sewa Tempat Tenant','Lainnya'
             ]);
             $table->decimal('jumlah', 14, 2);
             $table->string('kode_transaksi', 30)->unique();

@@ -49,7 +49,7 @@ class LoginController extends Controller
     {
         return match($role) {
             'admin'  => redirect()->route('admin.dashboard'),
-            'tenant'  => redirect()->route('tenant.dashboard'),
+            'Tenant'  => redirect()->route('Tenant.dashboard'),
             default  => redirect()->route('pengunjung.dashboard'),
         };
     }

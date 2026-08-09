@@ -10,7 +10,7 @@ return new class extends Migration {
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password');
-            $table->enum('role', ['pengunjung', 'tenant', 'admin'])->default('pengunjung');
+            $table->enum('role', ['pengunjung', 'Tenant', 'admin'])->default('pengunjung');
             $table->string('phone', 20)->nullable();
             $table->string('alamat')->nullable();
             $table->string('foto_profil')->nullable();

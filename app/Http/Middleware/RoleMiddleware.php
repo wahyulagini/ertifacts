@@ -10,7 +10,7 @@ class RoleMiddleware
 {
     /**
      * Usage di routes: middleware('role:admin')
-     *                  middleware('role:tenant')
+     *                  middleware('role:Tenant')
      *                  middleware('role:pengunjung')
      */
     public function handle(Request $request, Closure $next, string ...$roles): mixed
@@ -23,7 +23,7 @@ class RoleMiddleware
             // Kalau role tidak sesuai, kirim ke dashboard yang tepat
             return match(Auth::user()->role) {
                 'admin'  => redirect()->route('admin.dashboard'),
-                'tenant'  => redirect()->route('tenant.dashboard'),
+                'Tenant'  => redirect()->route('Tenant.dashboard'),
                 default  => redirect()->route('pengunjung.dashboard'),
             };
         }

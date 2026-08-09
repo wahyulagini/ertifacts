@@ -28,11 +28,11 @@
     </div>
 </div>
 
-{{-- INFO PENDAPATAN TENANT (bukan bagian pendapatan museum) --}}
+{{-- INFO PENDAPATAN Tenant (bukan bagian pendapatan museum) --}}
 <div class="bg-amber-50 border border-amber-200 rounded-xl px-4 py-3 mb-6 text-sm text-amber-700">
     <i class="fa-solid fa-circle-info mr-1"></i>
-    Total penjualan kotor seluruh tenant bulan ini: <strong>Rp {{ number_format($stats['pendapatan_tenant_kotor'], 0, ',', '.') }}</strong>
-    — ini milik tenant, bukan pendapatan museum. Museum hanya menerima potongan pajak dari nilai ini.
+    Total penjualan kotor seluruh Tenant bulan ini: <strong>Rp {{ number_format($stats['pendapatan_Tenant_kotor'], 0, ',', '.') }}</strong>
+    — ini milik Tenant, bukan pendapatan museum. Museum hanya menerima potongan pajak dari nilai ini.
 </div>
 
 {{-- GRAFIK TREN 6 BULAN --}}
@@ -60,7 +60,7 @@
             <label class="block text-xs font-semibold text-brand-600 mb-1">Jenis Transaksi</label>
             <select name="jenis" class="rounded-lg border border-brand-200 px-3 py-2 text-sm">
                 <option value="">Semua</option>
-                @foreach(['Tiket Pengunjung','Sewa Tempat tenant','Pendapatan tenant','Biaya Peminjaman Artefak','Lainnya'] as $j)
+                @foreach(['Tiket Pengunjung','Sewa Tempat Tenant','Pendapatan Tenant','Biaya Peminjaman Artefak','Lainnya'] as $j)
                     <option value="{{ $j }}" {{ request('jenis') === $j ? 'selected' : '' }}>{{ $j }}</option>
                 @endforeach
             </select>

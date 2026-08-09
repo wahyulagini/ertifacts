@@ -49,7 +49,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/home', function () {
         return match (auth()->user()->role) {
             'admin'  => redirect()->route('admin.dashboard'),
-            'tenant' => redirect()->route('tenant.dashboard'),
+            'Tenant' => redirect()->route('Tenant.dashboard'),
             default  => redirect()->route('pengunjung.dashboard'),
         };
     })->name('home');
@@ -86,10 +86,10 @@ Route::middleware('auth')->group(function () {
             // (Fitur koleksi pengunjung telah dipindahkan ke Landing Page)
         });
 
-    // ── TENANT ─────────────────────────────
-    Route::middleware('role:tenant')
-    ->prefix('tenant')
-    ->name('tenant.')
+    // ── Tenant ─────────────────────────────
+    Route::middleware('role:Tenant')
+    ->prefix('Tenant')
+    ->name('Tenant.')
     ->group(function () {
         Route::get('/dashboard', [TenantController::class, 'dashboard'])->name('dashboard');
 
@@ -122,9 +122,9 @@ Route::middleware('auth')->group(function () {
             Route::post('/reservasi/{id}/setuju',     [AdminController::class, 'setujuReservasi'])->name('reservasi.setuju');
             Route::post('/reservasi/{id}/tolak',      [AdminController::class, 'tolakReservasi'])->name('reservasi.tolak');
             Route::post('/reservasi/{id}/selesai',    [AdminController::class, 'selesaiReservasi'])->name('reservasi.selesai');
-            Route::get('/tenant',                      [AdminController::class, 'tenant'])->name('tenant');
-            Route::post('/tenant/{id}/setuju',         [AdminController::class, 'setujuTenant'])->name('tenant.setuju');
-            Route::post('/tenant/{id}/tolak',          [AdminController::class, 'tolakTenant'])->name('tenant.tolak');
+            Route::get('/Tenant',                      [AdminController::class, 'Tenant'])->name('Tenant');
+            Route::post('/Tenant/{id}/setuju',         [AdminController::class, 'setujuTenant'])->name('Tenant.setuju');
+            Route::post('/Tenant/{id}/tolak',          [AdminController::class, 'tolakTenant'])->name('Tenant.tolak');
             Route::get('/keuangan',                   [AdminController::class, 'keuangan'])->name('keuangan');
             Route::get('/pajak',                      [AdminController::class, 'pajak'])->name('pajak');
             Route::post('/pajak/{id}/konfirmasi',     [AdminController::class, 'konfirmasiPajak'])->name('pajak.konfirmasi');

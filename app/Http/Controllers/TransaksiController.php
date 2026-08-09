@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
 use App\Models\Transaksi;
-use App\Models\Pajaktenant;
+use App\Models\PajakTenant;
 
 class TransaksiController extends Controller
 {
@@ -15,11 +15,11 @@ class TransaksiController extends Controller
         return view('pengunjung.transaksi', compact('transaksi'));
     }
 
-    public function tenant()
+    public function Tenant()
     {
-        $tenant    = Auth::user()->tenant;
-        $transaksi = Transaksi::where('tenant_id', $tenant?->id)
-            ->with('pajaktenant')->latest()->paginate(15);
-        return view('tenant.transaksi', compact('transaksi'));
+        $Tenant    = Auth::user()->Tenant;
+        $transaksi = Transaksi::where('Tenant_id', $Tenant?->id)
+            ->with('pajakTenant')->latest()->paginate(15);
+        return view('Tenant.transaksi', compact('transaksi'));
     }
 }

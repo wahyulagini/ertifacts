@@ -1,26 +1,26 @@
 @extends('layouts.dashboard')
 @section('title', 'Pusat Bantuan')
 @section('page-title', 'Pusat Bantuan')
-@section('page-subtitle', 'FAQ dan tiket bantuan untuk tenant E-RTIFACT')
+@section('page-subtitle', 'FAQ dan tiket bantuan untuk Tenant E-RTIFACT')
 
 @section('sidebar-nav')
 <p class="nav-section">Utama</p>
-<a href="{{ route('tenant.dashboard') }}" class="nav-link">
+<a href="{{ route('Tenant.dashboard') }}" class="nav-link">
     <i class="fa-solid fa-gauge"></i> Beranda
 </a>
 
 <p class="nav-section">Keuangan</p>
-<a href="{{ route('tenant.pajak') }}" class="nav-link">
+<a href="{{ route('Tenant.pajak') }}" class="nav-link">
     <i class="fa-solid fa-receipt"></i> Tagihan Pajak
 </a>
 
 <p class="nav-section">Pusat Bantuan</p>
-<a href="{{ route('tenant.bantuan') }}" class="nav-link active">
+<a href="{{ route('Tenant.bantuan') }}" class="nav-link active">
     <i class="fa-solid fa-headset"></i> Pusat Bantuan
 </a>
 
 <p class="nav-section">Akun</p>
-<a href="{{ route('tenant.profil') }}" class="nav-link">
+<a href="{{ route('Tenant.profil') }}" class="nav-link">
     <i class="fa-solid fa-store"></i> Profil Usaha
 </a>
 @endsection
@@ -56,7 +56,7 @@
                      'Tagihan pajak digenerate otomatis oleh sistem setiap bulan berdasarkan persentase yang disepakati dengan admin. Anda dapat melihatnya di menu "Tagihan Pajak".'],
                     ['Bagaimana cara membayar tagihan pajak?',
                      'Pergi ke menu "Tagihan Pajak", pilih tagihan yang belum dibayar, lalu unggah bukti transfer ke nomor rekening yang tertera. Admin akan mengkonfirmasi dalam 1×24 jam kerja.'],
-                    ['Status tenant saya masih "Menunggu", apa yang harus dilakukan?',
+                    ['Status Tenant saya masih "Menunggu", apa yang harus dilakukan?',
                      'Tidak perlu khawatir. Tim admin kami sedang meninjau permohonan Anda. Proses biasanya selesai dalam 1×24 jam kerja. Jika lebih dari itu, kirim tiket bantuan di bawah ini.'],
                     ['Apakah saya bisa mendaftar ke lebih dari satu event?',
                      'Ya, Anda bisa mendaftar ke event lain melalui menu "Daftar Event" jika tersedia event baru. Setiap pendaftaran akan melalui proses persetujuan admin terlebih dahulu.'],
@@ -94,7 +94,7 @@
                     @foreach($errors->all() as $e)<p>{{ $e }}</p>@endforeach
                 </div>
                 @endif
-                <form method="POST" action="{{ route('tenant.bantuan.store') }}" class="space-y-4">
+                <form method="POST" action="{{ route('Tenant.bantuan.store') }}" class="space-y-4">
                     @csrf
                     <div>
                         <label class="block text-xs font-bold text-brand-700 uppercase tracking-wider mb-1.5">

@@ -5,12 +5,12 @@
 
 @section('sidebar-nav')
 <p class="nav-section">Utama</p>
-<a href="{{ route('tenant.dashboard') }}" class="nav-link active">
+<a href="{{ route('Tenant.dashboard') }}" class="nav-link active">
     <i class="fa-solid fa-gauge"></i> Beranda
 </a>
 
 <p class="nav-section">Keuangan</p>
-<a href="{{ route('tenant.pajak') }}" class="nav-link">
+<a href="{{ route('Tenant.pajak') }}" class="nav-link">
     <i class="fa-solid fa-receipt"></i> Tagihan Sewa
     @if(($stats['pajak_belum_bayar'] ?? 0) > 0)
     <span class="ml-auto bg-brand-rust text-white text-[9px] font-bold px-1.5 py-0.5 rounded-full">!</span>
@@ -18,7 +18,7 @@
 </a>
 
 <p class="nav-section">Pusat Bantuan</p>
-<a href="{{ route('tenant.bantuan') }}" class="nav-link">
+<a href="{{ route('Tenant.bantuan') }}" class="nav-link">
     <i class="fa-solid fa-headset"></i> Pusat Bantuan
     @if(isset($stats['tiket_menunggu_balasan']) && $stats['tiket_menunggu_balasan'] > 0)
     <span class="ml-auto bg-blue-500 text-white text-[9px] font-bold px-1.5 py-0.5 rounded-full">{{ $stats['tiket_menunggu_balasan'] }}</span>
@@ -26,7 +26,7 @@
 </a>
 
 <p class="nav-section">Akun</p>
-<a href="{{ route('tenant.profil') }}" class="nav-link">
+<a href="{{ route('Tenant.profil') }}" class="nav-link">
     <i class="fa-solid fa-store"></i> Profil Usaha
 </a>
 @endsection
@@ -34,7 +34,7 @@
 @section('content')
 
 {{-- ── STATUS BANNER ──────────────────────────────── --}}
-@if($tenant->status === 'menunggu')
+@if($Tenant->status === 'menunggu')
 <div class="flex items-start gap-3 bg-yellow-50 border border-yellow-300 rounded-2xl px-5 py-4 mb-6">
     <div class="w-10 h-10 bg-yellow-100 rounded-xl flex items-center justify-center shrink-0">
         <i class="fa-solid fa-hourglass-half text-yellow-600"></i>
@@ -42,32 +42,32 @@
     <div class="flex-1">
         <p class="font-bold text-yellow-800 text-sm">Menunggu Persetujuan Admin</p>
         <p class="text-yellow-700 text-xs mt-0.5 leading-relaxed">
-            Permohonan tenant Anda sedang ditinjau. Proses biasanya selesai dalam 1×24 jam kerja.
+            Permohonan Tenant Anda sedang ditinjau. Proses biasanya selesai dalam 1×24 jam kerja.
             Anda akan dapat menggunakan fitur penuh setelah disetujui.
         </p>
     </div>
     <span class="badge badge-yellow shrink-0">Pending</span>
 </div>
 
-@elseif($tenant->status === 'ditolak')
+@elseif($Tenant->status === 'ditolak')
 <div class="flex items-start gap-3 bg-red-50 border border-red-200 rounded-2xl px-5 py-4 mb-6">
     <div class="w-10 h-10 bg-red-100 rounded-xl flex items-center justify-center shrink-0">
         <i class="fa-solid fa-circle-xmark text-red-500"></i>
     </div>
     <div class="flex-1">
         <p class="font-bold text-red-800 text-sm">Permohonan Ditolak</p>
-        <p class="text-red-600 text-xs mt-0.5">{{ $tenant->catatan_admin ?? 'Hubungi admin untuk informasi lebih lanjut.' }}</p>
+        <p class="text-red-600 text-xs mt-0.5">{{ $Tenant->catatan_admin ?? 'Hubungi admin untuk informasi lebih lanjut.' }}</p>
     </div>
 </div>
 
-@elseif($tenant->status === 'aktif' && ($stats['pajak_belum_bayar'] ?? 0) > 0)
+@elseif($Tenant->status === 'aktif' && ($stats['pajak_belum_bayar'] ?? 0) > 0)
 <div class="flex items-center gap-3 bg-orange-50 border border-orange-200 rounded-2xl px-5 py-3 mb-6">
     <i class="fa-solid fa-triangle-exclamation text-orange-500 shrink-0"></i>
     <div class="flex-1">
         <p class="font-bold text-orange-800 text-sm">Ada Tagihan Sewa Belum Dibayar</p>
         <p class="text-orange-600 text-xs">Total: <strong>Rp {{ number_format($stats['pajak_belum_bayar'], 0, ',', '.') }}</strong></p>
     </div>
-    <a href="{{ route('tenant.pajak') }}" class="btn-primary text-xs py-1.5 px-3 shrink-0">
+    <a href="{{ route('Tenant.pajak') }}" class="btn-primary text-xs py-1.5 px-3 shrink-0">
         Bayar Sekarang
     </a>
 </div>
@@ -76,23 +76,23 @@
 {{-- ── HEADER INFO USAHA ───────────────────────────── --}}
 <div class="bg-gradient-to-r from-brand-700 to-brand-800 rounded-2xl p-5 mb-6 flex items-center gap-4">
     <div class="w-14 h-14 rounded-2xl bg-brand-gold/30 flex items-center justify-center text-brand-gold font-serif font-bold text-2xl shrink-0">
-        {{ strtoupper(substr($tenant->nama_tenant, 0, 1)) }}
+        {{ strtoupper(substr($Tenant->nama_Tenant, 0, 1)) }}
     </div>
     <div class="flex-1 min-w-0">
-        <h2 class="font-serif text-xl font-bold text-white truncate">{{ $tenant->nama_tenant }}</h2>
+        <h2 class="font-serif text-xl font-bold text-white truncate">{{ $Tenant->nama_Tenant }}</h2>
         <div class="flex items-center gap-3 mt-1 flex-wrap">
-            <span class="text-brand-300 text-xs">{{ $tenant->jenis_usaha }}</span>
-            @if($tenant->lokasi_di_museum)
-            <span class="text-brand-300 text-xs">· {{ $tenant->lokasi_di_museum }}</span>
+            <span class="text-brand-300 text-xs">{{ $Tenant->jenis_usaha }}</span>
+            @if($Tenant->lokasi_di_museum)
+            <span class="text-brand-300 text-xs">· {{ $Tenant->lokasi_di_museum }}</span>
             @endif
-            <span class="badge {{ $tenant->status === 'aktif' ? 'badge-green' : ($tenant->status === 'menunggu' ? 'badge-yellow' : 'badge-red') }}">
-                {{ ucfirst($tenant->status) }}
+            <span class="badge {{ $Tenant->status === 'aktif' ? 'badge-green' : ($Tenant->status === 'menunggu' ? 'badge-yellow' : 'badge-red') }}">
+                {{ ucfirst($Tenant->status) }}
             </span>
         </div>
     </div>
     <div class="hidden sm:block text-right shrink-0">
         <p class="text-brand-300 text-xs">Sewa Booth</p>
-        <p class="font-bold text-brand-gold text-lg">{{ $tenant->tarif_sewa_rp }}</p>
+        <p class="font-bold text-brand-gold text-lg">{{ $Tenant->tarif_sewa_rp }}</p>
     </div>
 </div>
 
@@ -135,7 +135,7 @@
                      'Tagihan sewa akan di-generate otomatis oleh sistem. Anda akan mendapat notifikasi jika ada tagihan baru.'],
                     ['Bagaimana cara membayar tagihan sewa?',
                      'Pergi ke menu "Tagihan Sewa", pilih tagihan yang belum dibayar, lalu unggah bukti transfer sesuai nomor rekening yang tertera. Admin akan mengkonfirmasi dalam 1×24 jam kerja.'],
-                    ['Status tenant saya masih "Menunggu", apa yang harus dilakukan?',
+                    ['Status Tenant saya masih "Menunggu", apa yang harus dilakukan?',
                      'Tidak perlu khawatir. Tim admin kami akan meninjau permohonan Anda. Proses biasanya selesai dalam 1×24 jam kerja. Jika lebih dari itu, gunakan fitur Tiket Bantuan untuk menghubungi admin.'],
                     ['Bagaimana cara menghubungi admin jika ada masalah?',
                      'Gunakan fitur "Kirim Tiket Bantuan" di bagian bawah halaman ini atau di halaman Pusat Bantuan. Jelaskan masalah Anda secara detail dan admin akan membalas secepatnya.'],
@@ -154,7 +154,7 @@
                 @endforeach
             </div>
             <div class="px-5 py-3 border-t border-brand-100">
-                <a href="{{ route('tenant.bantuan') }}" class="text-xs text-brand-400 hover:text-brand-600 font-semibold">
+                <a href="{{ route('Tenant.bantuan') }}" class="text-xs text-brand-400 hover:text-brand-600 font-semibold">
                     Lihat semua tiket bantuan →
                 </a>
             </div>
@@ -178,7 +178,7 @@
                     @foreach($errors->all() as $e)<p>{{ $e }}</p>@endforeach
                 </div>
                 @endif
-                <form method="POST" action="{{ route('tenant.bantuan.store') }}" class="space-y-4">
+                <form method="POST" action="{{ route('Tenant.bantuan.store') }}" class="space-y-4">
                     @csrf
                     <div>
                         <label class="block text-xs font-bold text-brand-700 uppercase tracking-wider mb-1.5">Subjek</label>
@@ -204,27 +204,27 @@
     <div class="space-y-4">
 
         {{-- Info Event --}}
-        @if($tenant->event)
+        @if($Tenant->event)
         <div class="bg-gradient-to-br from-brand-gold to-yellow-600 rounded-2xl p-5 text-white space-y-3 relative overflow-hidden shadow-lg shadow-brand-gold/20">
             <div class="absolute -right-4 -top-4 opacity-20 text-6xl">
                 <i class="fa-solid fa-calendar-star"></i>
             </div>
             <div class="relative z-10">
                 <p class="text-yellow-100 text-[10px] font-bold uppercase tracking-wider mb-1">Event Saat Ini</p>
-                <h3 class="font-serif text-lg font-bold leading-tight">{{ $tenant->event->judul_event }}</h3>
+                <h3 class="font-serif text-lg font-bold leading-tight">{{ $Tenant->event->judul_event }}</h3>
                 <div class="space-y-1.5 mt-3 text-xs text-yellow-50">
                     <div class="flex items-center gap-2">
                         <i class="fa-solid fa-calendar-day w-4 text-center"></i>
-                        <span>Mulai: {{ \Carbon\Carbon::parse($tenant->event->tanggal_mulai)->translatedFormat('d F Y') }}</span>
+                        <span>Mulai: {{ \Carbon\Carbon::parse($Tenant->event->tanggal_mulai)->translatedFormat('d F Y') }}</span>
                     </div>
                     <div class="flex items-center gap-2 font-bold text-white">
                         <i class="fa-solid fa-calendar-check w-4 text-center"></i>
-                        <span>Berakhir: {{ \Carbon\Carbon::parse($tenant->event->tanggal_selesai)->translatedFormat('d F Y') }}</span>
+                        <span>Berakhir: {{ \Carbon\Carbon::parse($Tenant->event->tanggal_selesai)->translatedFormat('d F Y') }}</span>
                     </div>
-                    @if($tenant->event->lokasi_area)
+                    @if($Tenant->event->lokasi_area)
                     <div class="flex items-center gap-2">
                         <i class="fa-solid fa-location-dot w-4 text-center"></i>
-                        <span>Area: {{ $tenant->event->lokasi_area }}</span>
+                        <span>Area: {{ $Tenant->event->lokasi_area }}</span>
                     </div>
                     @endif
                 </div>
@@ -237,7 +237,7 @@
             <h3 class="font-bold text-brand-800 text-sm">Perhitungan Tagihan Sewa</h3>
             <div class="bg-brand-50 rounded-xl p-4 space-y-2.5">
                 @foreach([
-                    ['Sewa tempat/bulan', 'Rp ' . number_format($tenant->tarif_sewa ?? 0, 0, ',', '.'), 'font-bold text-brand-800'],
+                    ['Sewa tempat/bulan', 'Rp ' . number_format($Tenant->tarif_sewa ?? 0, 0, ',', '.'), 'font-bold text-brand-800'],
                     ['Tagihan bulan ini', 'Rp ' . number_format($stats['pajak_bulan'], 0, ',', '.'), 'font-bold text-purple-600'],
                 ] as [$label, $val, $cls])
                 <div class="flex items-center justify-between text-xs">
@@ -253,7 +253,7 @@
                 </div>
             </div>
             @if(($stats['pajak_belum_bayar'] ?? 0) > 0)
-            <a href="{{ route('tenant.pajak') }}" class="btn-primary w-full justify-center text-xs">
+            <a href="{{ route('Tenant.pajak') }}" class="btn-primary w-full justify-center text-xs">
                 <i class="fa-solid fa-money-bill-wave"></i> Bayar Tagihan
             </a>
             @else
@@ -267,7 +267,7 @@
         <div class="bg-white rounded-2xl border border-brand-200 p-5 space-y-3">
             <div class="flex items-center justify-between">
                 <h3 class="font-bold text-brand-800 text-sm">Tiket Bantuan</h3>
-                <a href="{{ route('tenant.bantuan') }}" class="text-xs text-brand-400 hover:text-brand-600 font-semibold">Semua →</a>
+                <a href="{{ route('Tenant.bantuan') }}" class="text-xs text-brand-400 hover:text-brand-600 font-semibold">Semua →</a>
             </div>
             @forelse($tikets->take(4) as $t)
             <div class="flex items-start gap-3 py-1.5 border-b border-brand-50 last:border-0">
@@ -293,10 +293,10 @@
                 </div>
                 <div class="flex items-center gap-2">
                     <i class="fa-solid fa-map-pin text-brand-gold w-4"></i>
-                    <span>{{ $tenant->lokasi_di_museum ?? 'Lokasi belum ditetapkan' }}</span>
+                    <span>{{ $Tenant->lokasi_di_museum ?? 'Lokasi belum ditetapkan' }}</span>
                 </div>
                 <div class="flex items-center gap-2">
-                    <span>Biaya sewa: {{ $tenant->tarif_sewa_rp }}</span>
+                    <span>Biaya sewa: {{ $Tenant->tarif_sewa_rp }}</span>
                 </div>
             </div>
         </div>

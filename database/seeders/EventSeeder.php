@@ -42,7 +42,7 @@ class EventSeeder extends Seeder
                     'tanggal_mulai' => Carbon::now()->addDays($item[2]),
                     'tanggal_selesai' => Carbon::now()->addDays($item[2] + $item[3]),
                     'lokasi_area' => $item[7],
-                    'kuota_tenant' => $item[4],
+                    'kuota_Tenant' => $item[4],
                     'harga_sewa_booth' => $item[5],
                     'status' => $item[6]
                 ]

@@ -9,7 +9,7 @@ class TiketBantuan extends Model
     protected $table = 'tiket_bantuan';
 
     protected $fillable = [
-        'tenant_id',
+        'Tenant_id',
         'subjek',
         'pesan',
         'status',
@@ -21,7 +21,7 @@ class TiketBantuan extends Model
         'dibalas_pada' => 'datetime',
     ];
 
-    public function tenant()
+    public function Tenant()
     {
         return $this->belongsTo(Tenant::class);
     }

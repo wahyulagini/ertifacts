@@ -26,7 +26,7 @@
     <div class="lg:col-span-1">
         <div class="bg-white rounded-2xl border border-brand-200 p-5">
             <h3 class="font-bold text-brand-800 mb-4">Transaksi Baru</h3>
-            <form action="{{ route('tenant.penjualan.store') }}" method="POST" class="space-y-4">
+            <form action="{{ route('Tenant.penjualan.store') }}" method="POST" class="space-y-4">
                 @csrf
                 <div>
                     <label class="block text-xs font-semibold text-brand-600 mb-1">Nominal Penjualan (Rp)</label>
@@ -62,9 +62,9 @@
                     @error('keterangan') <p class="text-xs text-red-600 mt-1">{{ $message }}</p> @enderror
                 </div>
 
-                @if($tenant)
+                @if($Tenant)
                 <div class="rounded-lg bg-brand-50 border border-brand-100 px-3 py-2 text-xs text-brand-600">
-                    Pajak otomatis <strong>{{ $tenant->persentase_pajak }}%</strong> akan dihitung dari nominal ini.
+                    Pajak otomatis <strong>{{ $Tenant->persentase_pajak }}%</strong> akan dihitung dari nominal ini.
                 </div>
                 @endif
 

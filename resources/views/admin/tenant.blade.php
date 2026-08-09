@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 @section('title', 'Kelola Permohonan Tenant')
 @section('page-title', 'Kelola Permohonan Tenant')
-@section('page-subtitle', 'Approve permohonan dan kelola tenant museum')
+@section('page-subtitle', 'Approve permohonan dan kelola Tenant museum')
 
  
 
@@ -38,19 +38,19 @@
     @endforeach
 </div>
 
-{{-- Daftar tenant --}}
+{{-- Daftar Tenant --}}
 <div class="space-y-4">
-    @forelse($tenants as $t)
+    @forelse($Tenants as $t)
     <div class="bg-white rounded-2xl border border-brand-200 p-5 hover:shadow-md transition-all">
         <div class="flex flex-col sm:flex-row sm:items-start gap-4">
 
             <div class="flex items-start gap-4 flex-1 min-w-0">
                 <div class="w-12 h-12 rounded-xl bg-amber-100 flex items-center justify-center text-amber-700 font-bold text-lg shrink-0">
-                    {{ strtoupper(substr($t->nama_tenant, 0, 1)) }}
+                    {{ strtoupper(substr($t->nama_Tenant, 0, 1)) }}
                 </div>
                 <div class="min-w-0 flex-1">
                     <div class="flex items-center gap-2 flex-wrap">
-                        <h3 class="font-bold text-brand-900">{{ $t->nama_tenant }}</h3>
+                        <h3 class="font-bold text-brand-900">{{ $t->nama_Tenant }}</h3>
                         @php
                             $sc = match($t->status) {
                                 'aktif'    => 'badge-green',
@@ -82,17 +82,17 @@
 
             <div class="flex items-center gap-2 shrink-0">
                 @if($t->status === 'menunggu')
-                <button onclick="openTenantModal('setuju', {{ $t->id }}, '{{ $t->nama_tenant }}')"
+                <button onclick="openTenantModal('setuju', {{ $t->id }}, '{{ $t->nama_Tenant }}')"
                     class="flex items-center gap-1.5 bg-emerald-100 hover:bg-emerald-200 text-emerald-700 text-xs font-semibold px-3 py-2 rounded-xl transition-colors">
                     <i class="fa-solid fa-check"></i> Setujui
                 </button>
-                <button onclick="openTenantModal('tolak', {{ $t->id }}, '{{ $t->nama_tenant }}')"
+                <button onclick="openTenantModal('tolak', {{ $t->id }}, '{{ $t->nama_Tenant }}')"
                     class="flex items-center gap-1.5 bg-red-100 hover:bg-red-200 text-red-700 text-xs font-semibold px-3 py-2 rounded-xl transition-colors">
                     <i class="fa-solid fa-xmark"></i> Tolak
                 </button>
                 @elseif($t->status === 'aktif')
-                <form method="POST" action="{{ route('admin.tenant.tolak', $t->id) }}"
-                      onsubmit="return confirm('Nonaktifkan tenant ini?')">
+                <form method="POST" action="{{ route('admin.Tenant.tolak', $t->id) }}"
+                      onsubmit="return confirm('Nonaktifkan Tenant ini?')">
                     @csrf
                     <input type="hidden" name="catatan" value="Dinonaktifkan oleh admin">
                     <button class="flex items-center gap-1.5 bg-gray-100 hover:bg-gray-200 text-gray-700 text-xs font-semibold px-3 py-2 rounded-xl transition-colors">
@@ -106,24 +106,24 @@
     @empty
     <div class="bg-white rounded-2xl border border-brand-200 py-20 flex flex-col items-center text-center">
         <i class="fa-solid fa-store text-4xl text-brand-200 mb-4"></i>
-        <p class="font-bold text-brand-600">Tidak ada tenant ditemukan</p>
+        <p class="font-bold text-brand-600">Tidak ada Tenant ditemukan</p>
     </div>
     @endforelse
 </div>
 
-<div class="mt-4">{{ $tenants->links() }}</div>
+<div class="mt-4">{{ $Tenants->links() }}</div>
 
-{{-- Modal Setujui/Tolak tenant --}}
-<div id="tenant-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/50 backdrop-blur-sm p-4">
+{{-- Modal Setujui/Tolak Tenant --}}
+<div id="Tenant-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/50 backdrop-blur-sm p-4">
     <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md border border-brand-200 overflow-hidden">
         <div class="px-6 py-4 border-b border-brand-100">
-            <h3 id="tenant-modal-title" class="font-bold text-brand-900"></h3>
-            <p id="tenant-modal-subtitle" class="text-xs text-brand-400 mt-0.5"></p>
+            <h3 id="Tenant-modal-title" class="font-bold text-brand-900"></h3>
+            <p id="Tenant-modal-subtitle" class="text-xs text-brand-400 mt-0.5"></p>
         </div>
-        <form id="tenant-modal-form" method="POST" class="p-6 space-y-4">
+        <form id="Tenant-modal-form" method="POST" class="p-6 space-y-4">
             @csrf
 
-            <div id="tenant-setuju-fields" class="space-y-3">
+            <div id="Tenant-setuju-fields" class="space-y-3">
                 <div class="grid grid-cols-2 gap-3">
                     <div>
                         <label class="text-xs font-bold text-brand-700 uppercase tracking-wider block mb-1.5">
@@ -143,7 +143,7 @@
                 </div>
                 <div class="bg-brand-50 border border-brand-200 rounded-xl px-3 py-2 text-xs text-brand-600 flex gap-2">
                     <i class="fa-solid fa-circle-info text-brand-gold shrink-0 mt-0.5"></i>
-                    Pajak dihitung otomatis dari setiap pendapatan tenant yang tercatat.
+                    Pajak dihitung otomatis dari setiap pendapatan Tenant yang tercatat.
                 </div>
             </div>
 
@@ -151,15 +151,15 @@
                 <label class="text-xs font-bold text-brand-700 uppercase tracking-wider block mb-1.5">
                     Catatan <span class="text-brand-400 font-normal">(opsional)</span>
                 </label>
-                <textarea name="catatan" rows="2" id="tenant-catatan"
+                <textarea name="catatan" rows="2" id="Tenant-catatan"
                     class="w-full border-2 border-brand-200 rounded-xl px-4 py-2.5 text-sm focus:border-brand-gold focus:outline-none resize-none"
-                    placeholder="Catatan untuk tenant..."></textarea>
+                    placeholder="Catatan untuk Tenant..."></textarea>
             </div>
 
             <div class="flex gap-3">
                 <button type="button" onclick="closeTenantModal()"
                     class="btn-outline flex-1 justify-center py-2.5">Batal</button>
-                <button type="submit" id="tenant-modal-submit"
+                <button type="submit" id="Tenant-modal-submit"
                     class="btn-primary flex-1 justify-center py-2.5"></button>
             </div>
         </form>
@@ -169,17 +169,17 @@
 @push('scripts')
 <script>
 function openTenantModal(action, id, nama) {
-    const modal   = document.getElementById('tenant-modal');
-    const form    = document.getElementById('tenant-modal-form');
-    const title   = document.getElementById('tenant-modal-title');
-    const sub     = document.getElementById('tenant-modal-subtitle');
-    const submit  = document.getElementById('tenant-modal-submit');
-    const fields  = document.getElementById('tenant-setuju-fields');
-    const catatan = document.getElementById('tenant-catatan');
+    const modal   = document.getElementById('Tenant-modal');
+    const form    = document.getElementById('Tenant-modal-form');
+    const title   = document.getElementById('Tenant-modal-title');
+    const sub     = document.getElementById('Tenant-modal-subtitle');
+    const submit  = document.getElementById('Tenant-modal-submit');
+    const fields  = document.getElementById('Tenant-setuju-fields');
+    const catatan = document.getElementById('Tenant-catatan');
     catatan.value = '';
 
     if (action === 'setuju') {
-        form.action = `/admin/tenant/${id}/setuju`;
+        form.action = `/admin/Tenant/${id}/setuju`;
         title.textContent = 'Setujui Permohonan Tenant';
         sub.textContent = nama;
         submit.textContent = '✓ Setujui & Aktifkan';
@@ -187,7 +187,7 @@ function openTenantModal(action, id, nama) {
         fields.style.display = 'block';
         fields.querySelectorAll('input').forEach(i => i.required = true);
     } else {
-        form.action = `/admin/tenant/${id}/tolak`;
+        form.action = `/admin/Tenant/${id}/tolak`;
         title.textContent = 'Tolak Permohonan Tenant';
         sub.textContent = nama;
         submit.textContent = '✕ Tolak Permohonan';
@@ -201,12 +201,12 @@ function openTenantModal(action, id, nama) {
 }
 
 function closeTenantModal() {
-    const modal = document.getElementById('tenant-modal');
+    const modal = document.getElementById('Tenant-modal');
     modal.classList.add('hidden');
     modal.classList.remove('flex');
 }
 
-document.getElementById('tenant-modal').addEventListener('click', function(e) {
+document.getElementById('Tenant-modal').addEventListener('click', function(e) {
     if (e.target === this) closeTenantModal();
 });
 </script>

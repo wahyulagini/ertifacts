@@ -6,10 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class PajakTenant extends Model
 {
-    protected $table = 'pajak_tenant';
+    protected $table = 'pajak_Tenant';
 
     protected $fillable = [
-        'tenant_id', 'transaksi_id',
+        'Tenant_id', 'transaksi_id',
         'pendapatan_kotor', 'persentase_pajak',
         'nominal_pajak', 'pendapatan_bersih',
         'periode', 'status_bayar', 'dibayar_pada', 'catatan',
@@ -24,7 +24,7 @@ class PajakTenant extends Model
         'dibayar_pada'      => 'datetime',
     ];
 
-    public function tenant()    { return $this->belongsTo(Tenant::class); }
+    public function Tenant()    { return $this->belongsTo(Tenant::class); }
     public function transaksi() { return $this->belongsTo(Transaksi::class); }
 
     public function getNominalPajakRpAttribute(): string

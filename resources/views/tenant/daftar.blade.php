@@ -15,7 +15,7 @@
 
     <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
         <div class="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
-            <form action="{{ route('tenant.daftar.store') }}" method="POST" class="space-y-6">
+            <form action="{{ route('Tenant.daftar.store') }}" method="POST" class="space-y-6">
                 @csrf
                 <div>
                     <label class="block text-sm font-medium text-gray-700">Pilih Event</label>
@@ -33,8 +33,8 @@
                 <div>
                     <label class="block text-sm font-medium text-gray-700">Nama Usaha / Tenant</label>
                     <div class="mt-1">
-                        <input type="text" name="nama_tenant" required class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                        @error('nama_tenant') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
+                        <input type="text" name="nama_Tenant" required class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                        @error('nama_Tenant') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
                     </div>
                 </div>
 

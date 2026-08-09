@@ -61,7 +61,7 @@
                             <div id="modal-bayar-{{ $p->id }}" class="hidden fixed inset-0 bg-black/40 flex items-center justify-center z-50 p-4">
                                 <div class="bg-white rounded-2xl p-6 max-w-sm w-full">
                                     <h4 class="font-bold text-brand-800 mb-3">Upload Bukti Bayar - {{ $p->periode }}</h4>
-                                    <form action="{{ route('tenant.pajak.bayar', $p->id) }}" method="POST" enctype="multipart/form-data">
+                                    <form action="{{ route('Tenant.pajak.bayar', $p->id) }}" method="POST" enctype="multipart/form-data">
                                         @csrf
                                         <input type="file" name="bukti_bayar" accept=".jpg,.jpeg,.png,.pdf"
                                             class="w-full text-sm border border-brand-200 rounded-lg px-3 py-2 mb-3" required>

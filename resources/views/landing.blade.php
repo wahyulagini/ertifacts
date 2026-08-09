@@ -431,7 +431,7 @@ function openEventModal(id) {
     document.getElementById('modal-start').textContent = formatDate(ev.tanggal_mulai);
     document.getElementById('modal-end').textContent = formatDate(ev.tanggal_selesai);
     document.getElementById('modal-location').textContent = ev.lokasi_area || 'Area Museum';
-    document.getElementById('modal-quota').textContent = ev.kuota_tenant + ' Tenant';
+    document.getElementById('modal-quota').textContent = ev.kuota_Tenant + ' Tenant';
     document.getElementById('modal-price').textContent = 'Rp ' + Number(ev.harga_sewa_booth).toLocaleString('id-ID');
 
     const statusEl = document.getElementById('modal-status');

@@ -8,7 +8,7 @@
 <div class="mb-6 flex justify-between items-end">
     <div>
         <h1 class="text-2xl font-bold text-brand-900">Data Pengguna</h1>
-        <p class="text-brand-500 text-sm">Daftar pengunjung, tenant, dan admin</p>
+        <p class="text-brand-500 text-sm">Daftar pengunjung, Tenant, dan admin</p>
     </div>
     <a href="{{ route('admin.users.create') }}" class="btn-primary">
         <i class="fa-solid fa-plus"></i> Tambah Pengguna
@@ -42,7 +42,7 @@
                         @php
                             $roleColors = [
                                 'admin' => 'bg-red-100 text-red-700',
-                                'tenant' => 'bg-amber-100 text-amber-700',
+                                'Tenant' => 'bg-amber-100 text-amber-700',
                                 'pengunjung' => 'bg-emerald-100 text-emerald-700',
                             ];
                             $color = $roleColors[$u->role] ?? 'bg-gray-100 text-gray-700';

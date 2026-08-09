@@ -10,7 +10,7 @@
     @foreach([
         ['fa-users',      'Total Pengguna',      $stats['total_user']         ?? 0,   'bg-blue-50 text-blue-600'],
         ['fa-book-open',  'Kunjungan Hari Ini',  $stats['kunjungan_hari_ini'] ?? 0,   'bg-teal-50 text-teal-600'],
-        ['fa-store',      'Tenant Aktif',        $stats['tenant_aktif']       ?? 0,   'bg-amber-50 text-amber-600'],
+        ['fa-store',      'Tenant Aktif',        $stats['Tenant_aktif']       ?? 0,   'bg-amber-50 text-amber-600'],
         ['fa-coins',      'Pendapatan Bulan Ini','Rp ' . number_format($stats['pendapatan_bulan'] ?? 0, 0, ',', '.'), 'bg-emerald-50 text-emerald-600'],
     ] as [$icon, $label, $val, $cls])
     <div class="stat-card">
@@ -28,14 +28,14 @@
 </div>
 
 {{-- Alert pending --}}
-@if(($stats['menunggu_tenant'] ?? 0) > 0)
+@if(($stats['menunggu_Tenant'] ?? 0) > 0)
 <div class="flex items-center gap-3 bg-blue-50 border border-blue-200 rounded-xl px-4 py-3 mb-6">
     <i class="fa-solid fa-handshake text-blue-500 shrink-0"></i>
     <div class="flex-1 min-w-0">
-        <p class="text-xs font-bold text-blue-800">{{ $stats['menunggu_tenant'] }} permohonan tenant baru</p>
+        <p class="text-xs font-bold text-blue-800">{{ $stats['menunggu_Tenant'] }} permohonan Tenant baru</p>
         <p class="text-[11px] text-blue-600">Tinjau dan setujui.</p>
     </div>
-    <a href="{{ route('admin.tenant') }}" class="text-xs font-bold text-blue-700 underline whitespace-nowrap">Lihat →</a>
+    <a href="{{ route('admin.Tenant') }}" class="text-xs font-bold text-blue-700 underline whitespace-nowrap">Lihat →</a>
 </div>
 @endif
 
@@ -84,7 +84,7 @@
         </div>
     </div>
 
-    {{-- Kanan: keuangan + tenant pending --}}
+    {{-- Kanan: keuangan + Tenant pending --}}
     <div class="space-y-4">
 
         {{-- Ringkasan keuangan --}}
@@ -116,23 +116,23 @@
             </a>
         </div>
 
-        {{-- Permohonan tenant pending --}}
+        {{-- Permohonan Tenant pending --}}
         <div class="bg-white rounded-2xl border border-brand-200 p-5 space-y-3">
             <div class="flex items-center justify-between">
                 <h3 class="font-bold text-brand-800 text-sm">Permohonan Tenant</h3>
-                <a href="{{ route('admin.tenant') }}" class="text-xs text-brand-400 hover:text-brand-600 font-semibold">Semua →</a>
+                <a href="{{ route('admin.Tenant') }}" class="text-xs text-brand-400 hover:text-brand-600 font-semibold">Semua →</a>
             </div>
-            @forelse($tenant_pending ?? [] as $t)
+            @forelse($Tenant_pending ?? [] as $t)
             <div class="flex items-center gap-3 py-1.5 border-b border-brand-50 last:border-0">
                 <div class="w-8 h-8 rounded-lg bg-amber-100 flex items-center justify-center text-amber-700 text-xs font-bold shrink-0">
-                    {{ strtoupper(substr($t->nama_tenant, 0, 1)) }}
+                    {{ strtoupper(substr($t->nama_Tenant, 0, 1)) }}
                 </div>
                 <div class="flex-1 min-w-0">
-                    <p class="text-xs font-semibold text-brand-800 truncate">{{ $t->nama_tenant }}</p>
+                    <p class="text-xs font-semibold text-brand-800 truncate">{{ $t->nama_Tenant }}</p>
                     <p class="text-[10px] text-brand-400">{{ $t->jenis_usaha }}</p>
                 </div>
                 <div class="flex gap-1 shrink-0">
-                    <a href="{{ route('admin.tenant') }}" class="w-7 h-7 bg-brand-100 text-brand-600 rounded-lg flex items-center justify-center text-xs hover:bg-brand-200 transition-colors" title="Review">
+                    <a href="{{ route('admin.Tenant') }}" class="w-7 h-7 bg-brand-100 text-brand-600 rounded-lg flex items-center justify-center text-xs hover:bg-brand-200 transition-colors" title="Review">
                         <i class="fa-solid fa-eye text-[10px]"></i>
                     </a>
                 </div>

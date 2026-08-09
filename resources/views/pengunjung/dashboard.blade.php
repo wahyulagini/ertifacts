@@ -107,7 +107,7 @@
         @endif
     </div>
 
-    {{-- Info museum & tenant --}}
+    {{-- Info museum & Tenant --}}
     <div class="space-y-4">
 
         {{-- Info kunjungan --}}
@@ -137,25 +137,25 @@
             </div>
         </div>
 
-        {{-- tenant aktif --}}
+        {{-- Tenant aktif --}}
         <div class="bg-white rounded-2xl border border-brand-200 p-5 space-y-3">
-            <h3 class="font-bold text-brand-800 text-sm">tenant Aktif di Museum</h3>
-            @if(isset($tenant_aktif) && $tenant_aktif->count())
+            <h3 class="font-bold text-brand-800 text-sm">Tenant Aktif di Museum</h3>
+            @if(isset($Tenant_aktif) && $Tenant_aktif->count())
                 <div class="space-y-2">
-                    @foreach($tenant_aktif as $m)
+                    @foreach($Tenant_aktif as $m)
                     <div class="flex items-center gap-3 py-1.5">
                         <div class="w-8 h-8 rounded-lg bg-brand-100 flex items-center justify-center text-brand-500 text-xs font-bold shrink-0">
                             {{ strtoupper(substr($m->nama_usaha, 0, 1)) }}
                         </div>
                         <div class="min-w-0">
                             <p class="text-xs font-semibold text-brand-800 truncate">{{ $m->nama_usaha }}</p>
-                            <p class="text-[10px] text-brand-400">{{ $m->jenis_tenant }}</p>
+                            <p class="text-[10px] text-brand-400">{{ $m->jenis_Tenant }}</p>
                         </div>
                     </div>
                     @endforeach
                 </div>
             @else
-                <p class="text-xs text-brand-400">Belum ada tenant aktif.</p>
+                <p class="text-xs text-brand-400">Belum ada Tenant aktif.</p>
             @endif
         </div>
     </div>

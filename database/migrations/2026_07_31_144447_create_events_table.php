@@ -18,7 +18,7 @@ return new class extends Migration
             $table->date('tanggal_mulai');
             $table->date('tanggal_selesai');
             $table->string('lokasi_area', 100)->nullable();
-            $table->unsignedInteger('kuota_tenant')->default(0);
+            $table->unsignedInteger('kuota_Tenant')->default(0);
             $table->decimal('harga_sewa_booth', 12, 2)->default(0);
             $table->enum('status', ['mendatang', 'berjalan', 'selesai', 'dibatalkan'])->default('mendatang');
             $table->timestamps();

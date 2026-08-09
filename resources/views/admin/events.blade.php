@@ -38,7 +38,7 @@
                         </span>
                     </td>
                     <td class="py-3 px-5 text-sm text-brand-600">
-                        {{ $event->kuota_tenant }} Tenant<br>
+                        {{ $event->kuota_Tenant }} Tenant<br>
                         Rp {{ number_format($event->harga_sewa_booth, 0, ',', '.') }}
                     </td>
                     <td class="py-3 px-5 flex gap-2">

@@ -19,58 +19,58 @@ class TenantController extends Controller
     public function dashboard()
     {
         $user   = Auth::user();
-        $tenant = Tenant::where('user_id', $user->id)->where('status', 'aktif')->latest()->first() ?? Tenant::where('user_id', $user->id)->latest()->first();
+        $Tenant = Tenant::where('user_id', $user->id)->where('status', 'aktif')->latest()->first() ?? Tenant::where('user_id', $user->id)->latest()->first();
 
-        if (!$tenant) {
-            return redirect()->route('tenant.daftar')
+        if (!$Tenant) {
+            return redirect()->route('Tenant.daftar')
                 ->with('info', 'Anda belum mendaftar untuk event manapun. Silakan daftar booth event.');
         }
 
-        $transaksi  = Transaksi::where('tenant_id', $tenant->id)->latest()->take(10)->get();
-        $pajak_list = PajakTenant::where('tenant_id', $tenant->id)->latest()->take(6)->get();
-        $tikets     = TiketBantuan::where('tenant_id', $tenant->id)->latest()->get();
+        $transaksi  = Transaksi::where('Tenant_id', $Tenant->id)->latest()->take(10)->get();
+        $pajak_list = PajakTenant::where('Tenant_id', $Tenant->id)->latest()->take(6)->get();
+        $tikets     = TiketBantuan::where('Tenant_id', $Tenant->id)->latest()->get();
 
         // Tagihan sewa bulan ini (berdasarkan harga sewa booth, bukan penjualan)
-        $pajak_bulan = PajakTenant::where('tenant_id', $tenant->id)
+        $pajak_bulan = PajakTenant::where('Tenant_id', $Tenant->id)
             ->where('periode', now()->format('Y-m'))
             ->sum('nominal_pajak');
 
         $stats = [
             'pajak_bulan'           => $pajak_bulan,
-            'pajak_belum_bayar'     => PajakTenant::where('tenant_id', $tenant->id)
+            'pajak_belum_bayar'     => PajakTenant::where('Tenant_id', $Tenant->id)
                                         ->whereIn('status_bayar', ['belum_bayar', 'menunggu_konfirmasi'])
                                         ->sum('nominal_pajak'),
-            'total_transaksi'       => Transaksi::where('tenant_id', $tenant->id)
+            'total_transaksi'       => Transaksi::where('Tenant_id', $Tenant->id)
                                         ->whereMonth('created_at', now()->month)
                                         ->whereYear('created_at', now()->year)
                                         ->count(),
-            'total_tiket'           => TiketBantuan::where('tenant_id', $tenant->id)->count(),
-            'tiket_menunggu_balasan'=> TiketBantuan::where('tenant_id', $tenant->id)->where('status','dibalas')->count(),
+            'total_tiket'           => TiketBantuan::where('Tenant_id', $Tenant->id)->count(),
+            'tiket_menunggu_balasan'=> TiketBantuan::where('Tenant_id', $Tenant->id)->where('status','dibalas')->count(),
         ];
 
-        return view('tenant.dashboard', compact('tenant', 'transaksi', 'pajak_list', 'tikets', 'stats'));
+        return view('Tenant.dashboard', compact('Tenant', 'transaksi', 'pajak_list', 'tikets', 'stats'));
     }
 
     // ═══════════════════════════════════════════════
-    // FORM DAFTAR TENANT
+    // FORM DAFTAR Tenant
     // ═══════════════════════════════════════════════
     public function formDaftar()
     {
         $events = \App\Models\Event::whereIn('status', ['mendatang', 'berjalan'])->get();
-        return view('tenant.daftar', compact('events'));
+        return view('Tenant.daftar', compact('events'));
     }
 
     public function storeDaftar(Request $request)
     {
         $validated = $request->validate([
             'event_id'         => ['required', 'exists:events,id'],
-            'nama_tenant'      => ['required', 'string', 'max:150'],
+            'nama_Tenant'      => ['required', 'string', 'max:150'],
             'jenis_usaha'      => ['required', 'string', 'max:100'],
             'deskripsi'        => ['nullable', 'string', 'max:500'],
             'no_kontak'        => ['nullable', 'string', 'max:20'],
         ], [
             'event_id.required'    => 'Event wajib dipilih.',
-            'nama_tenant.required' => 'Nama usaha wajib diisi.',
+            'nama_Tenant.required' => 'Nama usaha wajib diisi.',
             'jenis_usaha.required' => 'Jenis usaha wajib dipilih.',
         ]);
 
@@ -79,7 +79,7 @@ class TenantController extends Controller
         Tenant::create([
             'user_id'          => Auth::id(),
             'event_id'         => $event->id,
-            'nama_tenant'      => $validated['nama_tenant'],
+            'nama_Tenant'      => $validated['nama_Tenant'],
             'jenis_usaha'      => $validated['jenis_usaha'],
             'deskripsi'        => $validated['deskripsi'] ?? null,
             'lokasi_di_museum' => $event->lokasi_area, // mengikuti lokasi event
@@ -89,7 +89,7 @@ class TenantController extends Controller
             'status'           => 'menunggu',
         ]);
 
-        return redirect()->route('tenant.dashboard')
+        return redirect()->route('Tenant.dashboard')
             ->with('success', 'Pendaftaran event berhasil! Menunggu persetujuan admin.');
     }
 
@@ -98,17 +98,17 @@ class TenantController extends Controller
     // ═══════════════════════════════════════════════
     public function penjualan()
     {
-        $tenant    = Auth::user()->tenant;
-        $transaksi = Transaksi::where('tenant_id', $tenant?->id)->latest()->paginate(10);
-        return view('tenant.penjualan', compact('transaksi', 'tenant'));
+        $Tenant    = Auth::user()->Tenant;
+        $transaksi = Transaksi::where('Tenant_id', $Tenant?->id)->latest()->paginate(10);
+        return view('Tenant.penjualan', compact('transaksi', 'Tenant'));
     }
 
     public function storePenjualan(Request $request)
     {
-        $tenant = Auth::user()->tenant;
+        $Tenant = Auth::user()->Tenant;
 
-        if (!$tenant || $tenant->status !== 'aktif') {
-            return back()->with('error', 'Akun tenant belum aktif. Tunggu persetujuan admin.');
+        if (!$Tenant || $Tenant->status !== 'aktif') {
+            return back()->with('error', 'Akun Tenant belum aktif. Tunggu persetujuan admin.');
         }
 
         $validated = $request->validate([
@@ -125,8 +125,8 @@ class TenantController extends Controller
 
         $transaksi = Transaksi::create([
             'user_id'         => Auth::id(),
-            'tenant_id'       => $tenant->id,
-            'jenis_transaksi' => 'Pendapatan tenant',
+            'Tenant_id'       => $Tenant->id,
+            'jenis_transaksi' => 'Pendapatan Tenant',
             'jumlah'          => $validated['jumlah'],
             'metode_bayar'    => $validated['metode_bayar'],
             'status_bayar'    => 'lunas',
@@ -135,20 +135,20 @@ class TenantController extends Controller
             'created_at'      => $validated['tanggal'] ?? now(),
         ]);
 
-        $nominalPajak = $transaksi->jumlah * ($tenant->persentase_pajak / 100);
+        $nominalPajak = $transaksi->jumlah * ($Tenant->persentase_pajak / 100);
         PajakTenant::create([
-            'tenant_id'         => $tenant->id,
+            'Tenant_id'         => $Tenant->id,
             'transaksi_id'      => $transaksi->id,
             'pendapatan_kotor'  => $transaksi->jumlah,
-            'persentase_pajak'  => $tenant->persentase_pajak,
+            'persentase_pajak'  => $Tenant->persentase_pajak,
             'nominal_pajak'     => $nominalPajak,
             'pendapatan_bersih' => $transaksi->jumlah - $nominalPajak,
             'periode'           => now()->format('Y-m'),
             'status_bayar'      => 'belum_bayar',
         ]);
 
-        return redirect()->route('tenant.penjualan')
-            ->with('success', 'Penjualan dicatat! Pajak ' . $tenant->persentase_pajak . '% = Rp ' . number_format($nominalPajak, 0, ',', '.'));
+        return redirect()->route('Tenant.penjualan')
+            ->with('success', 'Penjualan dicatat! Pajak ' . $Tenant->persentase_pajak . '% = Rp ' . number_format($nominalPajak, 0, ',', '.'));
     }
 
     // ═══════════════════════════════════════════════
@@ -156,9 +156,9 @@ class TenantController extends Controller
     // ═══════════════════════════════════════════════
     public function riwayat(Request $request)
     {
-        $tenant = Auth::user()->tenant;
+        $Tenant = Auth::user()->Tenant;
 
-        $query = Transaksi::where('tenant_id', $tenant?->id);
+        $query = Transaksi::where('Tenant_id', $Tenant?->id);
 
         if ($request->filled('dari')) {
             $query->whereDate('created_at', '>=', $request->dari);
@@ -169,7 +169,7 @@ class TenantController extends Controller
 
         $transaksi = $query->latest()->paginate(15)->withQueryString();
 
-        return view('tenant.riwayat', compact('transaksi', 'tenant'));
+        return view('Tenant.riwayat', compact('transaksi', 'Tenant'));
     }
 
     // ═══════════════════════════════════════════════
@@ -177,19 +177,19 @@ class TenantController extends Controller
     // ═══════════════════════════════════════════════
     public function pajak()
     {
-        $tenant      = Auth::user()->tenant;
-        $pajak       = PajakTenant::where('tenant_id', $tenant?->id)->latest()->paginate(10);
-        $total_belum = PajakTenant::where('tenant_id', $tenant?->id)
+        $Tenant      = Auth::user()->Tenant;
+        $pajak       = PajakTenant::where('Tenant_id', $Tenant?->id)->latest()->paginate(10);
+        $total_belum = PajakTenant::where('Tenant_id', $Tenant?->id)
                         ->whereIn('status_bayar', ['belum_bayar', 'menunggu_konfirmasi'])
                         ->sum('nominal_pajak');
 
-        return view('tenant.pajak', compact('pajak', 'total_belum', 'tenant'));
+        return view('Tenant.pajak', compact('pajak', 'total_belum', 'Tenant'));
     }
 
     public function uploadBuktiBayar(Request $request, $id)
     {
-        $tenant = Auth::user()->tenant;
-        $pajak  = PajakTenant::where('tenant_id', $tenant?->id)->findOrFail($id);
+        $Tenant = Auth::user()->Tenant;
+        $pajak  = PajakTenant::where('Tenant_id', $Tenant?->id)->findOrFail($id);
 
         $request->validate([
             'bukti_bayar' => ['required', 'file', 'mimes:jpg,jpeg,png,pdf', 'max:2048'],
@@ -214,16 +214,16 @@ class TenantController extends Controller
     // ═══════════════════════════════════════════════
     public function profil()
     {
-        $tenant = Auth::user()->tenant;
-        return view('tenant.profil', compact('tenant'));
+        $Tenant = Auth::user()->Tenant;
+        return view('Tenant.profil', compact('Tenant'));
     }
 
     public function updateProfil(Request $request)
     {
-        $tenant = Auth::user()->tenant;
+        $Tenant = Auth::user()->Tenant;
 
         $validated = $request->validate([
-            'nama_tenant'      => ['required', 'string', 'max:150'],
+            'nama_Tenant'      => ['required', 'string', 'max:150'],
             'jenis_usaha'      => ['required', 'string', 'max:100'],
             'deskripsi'        => ['nullable', 'string', 'max:500'],
             'no_kontak'        => ['nullable', 'string', 'max:20'],
@@ -233,13 +233,13 @@ class TenantController extends Controller
         ]);
 
         if ($request->hasFile('logo')) {
-            if ($tenant->logo_path) {
-                Storage::disk('public')->delete($tenant->logo_path);
+            if ($Tenant->logo_path) {
+                Storage::disk('public')->delete($Tenant->logo_path);
             }
-            $validated['logo_path'] = $request->file('logo')->store('logo-tenant', 'public');
+            $validated['logo_path'] = $request->file('logo')->store('logo-Tenant', 'public');
         }
 
-        $tenant->update($validated);
+        $Tenant->update($validated);
 
         return back()->with('success', 'Profil usaha berhasil diperbarui.');
     }
@@ -249,14 +249,14 @@ class TenantController extends Controller
     // ═══════════════════════════════════════════════
     public function bantuan()
     {
-        $tenant = Auth::user()->tenant;
-        $tikets = TiketBantuan::where('tenant_id', $tenant?->id)->latest()->get();
-        return view('tenant.bantuan', compact('tenant', 'tikets'));
+        $Tenant = Auth::user()->Tenant;
+        $tikets = TiketBantuan::where('Tenant_id', $Tenant?->id)->latest()->get();
+        return view('Tenant.bantuan', compact('Tenant', 'tikets'));
     }
 
     public function storeBantuan(Request $request)
     {
-        $tenant = Auth::user()->tenant;
+        $Tenant = Auth::user()->Tenant;
 
         $request->validate([
             'subjek' => 'required|string|max:150',
@@ -267,7 +267,7 @@ class TenantController extends Controller
         ]);
 
         TiketBantuan::create([
-            'tenant_id' => $tenant->id,
+            'Tenant_id' => $Tenant->id,
             'subjek'    => $request->subjek,
             'pesan'     => $request->pesan,
             'status'    => 'menunggu',

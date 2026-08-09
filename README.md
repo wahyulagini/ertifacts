@@ -1,6 +1,6 @@
 <<<<<<< HEAD
 # e-rtifact
-Digital Museum Management: Rancang Bangun Sistem Terpadu Pengelolaan Operasional Museum Berbasis Digital.   Solusi web terpadu untuk efisiensi operasional museum. Mengintegrasikan pendataan artefak, reservasi kunjungan, serta pengawasan transaksi &amp; pajak tenant secara otomatis dalam satu kontrol terpusat.  
+Digital Museum Management: Rancang Bangun Sistem Terpadu Pengelolaan Operasional Museum Berbasis Digital.   Solusi web terpadu untuk efisiensi operasional museum. Mengintegrasikan pendataan artefak, reservasi kunjungan, serta pengawasan transaksi &amp; pajak Tenant secara otomatis dalam satu kontrol terpusat.  
 =======
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 

@@ -57,7 +57,7 @@
         <div class="grid grid-cols-2 gap-5">
             <div>
                 <label class="block text-sm font-bold text-brand-700 mb-1">Kuota Tenant</label>
-                <input type="number" name="kuota_tenant" required min="1" class="w-full bg-brand-50 border border-brand-200 rounded-xl px-4 py-2 text-sm focus:ring-2 focus:ring-brand-400">
+                <input type="number" name="kuota_Tenant" required min="1" class="w-full bg-brand-50 border border-brand-200 rounded-xl px-4 py-2 text-sm focus:ring-2 focus:ring-brand-400">
             </div>
             <div>
                 <label class="block text-sm font-bold text-brand-700 mb-1">Harga Sewa Booth</label>

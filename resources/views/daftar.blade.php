@@ -1,11 +1,11 @@
 @extends('layouts.dashboard')
 @section('title', 'Daftarkan Usaha Anda')
 @section('page-title', 'Daftarkan Usaha Anda')
-@section('page-subtitle', 'Lengkapi data usaha untuk mengajukan permohonan tenant museum')
+@section('page-subtitle', 'Lengkapi data usaha untuk mengajukan permohonan Tenant museum')
 
 @section('sidebar-nav')
-<p class="nav-section">Akun tenant</p>
-<a href="{{ route('tenant.daftar') }}" class="nav-link active">
+<p class="nav-section">Akun Tenant</p>
+<a href="{{ route('Tenant.daftar') }}" class="nav-link active">
     <i class="fa-solid fa-store"></i> Daftar Tenant
 </a>
 @endsection
@@ -42,7 +42,7 @@
         </div>
         @endif
 
-        <form method="POST" action="{{ route('tenant.daftar.store') }}" class="p-6 space-y-5">
+        <form method="POST" action="{{ route('Tenant.daftar.store') }}" class="p-6 space-y-5">
             @csrf
 
             {{-- Nama Usaha --}}
@@ -52,7 +52,7 @@
                 </label>
                 <div class="relative">
                     <i class="fa-solid fa-store absolute left-3.5 top-1/2 -translate-y-1/2 text-brand-300 text-sm pointer-events-none"></i>
-                    <input type="text" name="nama_tenant" value="{{ old('nama_tenant') }}"
+                    <input type="text" name="nama_Tenant" value="{{ old('nama_Tenant') }}"
                         class="w-full border-2 border-brand-200 rounded-xl pl-10 pr-4 py-2.5 text-sm focus:border-brand-gold focus:outline-none focus:ring-2 focus:ring-brand-gold/20"
                         placeholder="Nama toko / kafe / stand Anda" required>
                 </div>
@@ -123,7 +123,7 @@
             </div>
 
             <div class="flex gap-3 pt-2">
-                <a href="{{ route('tenant.dashboard') }}" class="btn-outline flex-1 justify-center py-3">
+                <a href="{{ route('Tenant.dashboard') }}" class="btn-outline flex-1 justify-center py-3">
                     Nanti Saja
                 </a>
                 <button type="submit" class="btn-primary flex-1 justify-center py-3">

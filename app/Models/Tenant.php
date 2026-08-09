@@ -9,11 +9,11 @@ class Tenant extends Model
 {
     use HasFactory;
 
-    // ✅ nama tabel: tenants (bukan tenant)
-    protected $table = 'tenants';
+    // ✅ nama tabel: Tenants (bukan Tenant)
+    protected $table = 'Tenants';
 
     protected $fillable = [
-        'user_id', 'event_id', 'nama_tenant', 'jenis_usaha', 'deskripsi',
+        'user_id', 'event_id', 'nama_Tenant', 'jenis_usaha', 'deskripsi',
         'lokasi_di_museum', 'logo_path', 'no_kontak', 'website',
         'tarif_sewa', 'persentase_pajak', 'status',
         'catatan_admin', 'disetujui_pada',
@@ -40,7 +40,7 @@ class Tenant extends Model
     {
         return $this->logo_path
             ? asset($this->logo_path)
-            : 'https://ui-avatars.com/api/?name=' . urlencode(substr($this->nama_tenant, 0, 1)) . '&background=C9963A&color=321F0E&size=80';
+            : 'https://ui-avatars.com/api/?name=' . urlencode(substr($this->nama_Tenant, 0, 1)) . '&background=C9963A&color=321F0E&size=80';
     }
 
     public function getTarifSewaRpAttribute(): string

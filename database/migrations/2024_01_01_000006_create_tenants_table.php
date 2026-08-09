@@ -5,10 +5,10 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration {
     public function up(): void {
-        Schema::create('tenants', function (Blueprint $table) {
+        Schema::create('Tenants', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->unique()->constrained('users')->cascadeOnDelete();
-            $table->string('nama_tenant', 150);
+            $table->string('nama_Tenant', 150);
             $table->string('jenis_usaha', 100);
             $table->text('deskripsi')->nullable();
             $table->string('lokasi_di_museum', 150)->nullable();
@@ -23,5 +23,5 @@ return new class extends Migration {
             $table->timestamps();
         });
     }
-    public function down(): void { Schema::dropIfExists('tenants'); }
+    public function down(): void { Schema::dropIfExists('Tenants'); }
 };

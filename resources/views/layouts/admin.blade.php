@@ -10,8 +10,8 @@
 <a href="{{ route('admin.reservasi') }}" class="nav-link {{ request()->routeIs('admin.reservasi') ? 'active' : '' }}">
     <i class="fa-solid fa-calendar-check"></i> Reservasi
 </a>
-<a href="{{ route('admin.tenant') }}" class="nav-link {{ request()->routeIs('admin.tenant') ? 'active' : '' }}">
-    <i class="fa-solid fa-handshake"></i> Permohonan tenant
+<a href="{{ route('admin.Tenant') }}" class="nav-link {{ request()->routeIs('admin.Tenant') ? 'active' : '' }}">
+    <i class="fa-solid fa-handshake"></i> Permohonan Tenant
 </a>
 
 <p class="nav-section">Keuangan</p>

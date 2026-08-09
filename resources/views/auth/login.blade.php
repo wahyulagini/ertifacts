@@ -134,7 +134,7 @@
                     Secara Digital.
                 </h2>
                 <p class="text-brand-300 text-sm leading-relaxed max-w-sm">
-                    Platform terintegrasi untuk mengelola koleksi museum, reservasi kunjungan, ketenantan tenant, dan keuangan operasional museum.
+                    Platform terintegrasi untuk mengelola koleksi museum, reservasi kunjungan, keTenantan Tenant, dan keuangan operasional museum.
                 </p>
             </div>
 

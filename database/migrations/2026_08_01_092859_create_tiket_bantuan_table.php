@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('tiket_bantuan', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('tenant_id')->constrained('tenants')->onDelete('cascade');
+            $table->foreignId('Tenant_id')->constrained('Tenants')->onDelete('cascade');
             $table->string('subjek');
             $table->text('pesan');
             $table->enum('status', ['menunggu', 'dibalas', 'ditutup'])->default('menunggu');

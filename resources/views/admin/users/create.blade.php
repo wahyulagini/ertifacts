@@ -43,7 +43,7 @@
                 <select name="role" id="roleSelect" required
                     class="w-full bg-brand-50 border border-brand-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-brand-400">
                     <option value="pengunjung" {{ old('role') == 'pengunjung' ? 'selected' : '' }}>Pengunjung</option>
-                    <option value="tenant" {{ old('role') == 'tenant' ? 'selected' : '' }}>Tenant</option>
+                    <option value="Tenant" {{ old('role') == 'Tenant' ? 'selected' : '' }}>Tenant</option>
                     <option value="admin" {{ old('role') == 'admin' ? 'selected' : '' }}>Admin</option>
                 </select>
                 @error('role') <span class="text-red-500 text-xs mt-1">{{ $message }}</span> @enderror
@@ -59,15 +59,15 @@
         </div>
 
         {{-- Form Tambahan Jika Memilih Tenant --}}
-        <div id="tenantFields" class="{{ old('role') == 'tenant' ? 'block' : 'hidden' }} space-y-5 p-5 bg-amber-50 rounded-xl border border-amber-200 mt-4">
+        <div id="TenantFields" class="{{ old('role') == 'Tenant' ? 'block' : 'hidden' }} space-y-5 p-5 bg-amber-50 rounded-xl border border-amber-200 mt-4">
             <h3 class="text-sm font-bold text-amber-800 border-b border-amber-200 pb-2">Informasi Usaha (Khusus Tenant)</h3>
             
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
                 <div>
                     <label class="block text-xs font-bold text-amber-900 mb-1">Nama Usaha / Tenant</label>
-                    <input type="text" name="nama_tenant" value="{{ old('nama_tenant') }}"
+                    <input type="text" name="nama_Tenant" value="{{ old('nama_Tenant') }}"
                         class="w-full bg-white border border-amber-300 rounded-xl px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500">
-                    @error('nama_tenant') <span class="text-red-500 text-xs mt-1">{{ $message }}</span> @enderror
+                    @error('nama_Tenant') <span class="text-red-500 text-xs mt-1">{{ $message }}</span> @enderror
                 </div>
                 <div>
                     <label class="block text-xs font-bold text-amber-900 mb-1">Jenis Usaha</label>
@@ -104,11 +104,11 @@
 @push('scripts')
 <script>
     document.getElementById('roleSelect').addEventListener('change', function() {
-        const tenantFields = document.getElementById('tenantFields');
-        if (this.value === 'tenant') {
-            tenantFields.classList.remove('hidden');
+        const TenantFields = document.getElementById('TenantFields');
+        if (this.value === 'Tenant') {
+            TenantFields.classList.remove('hidden');
         } else {
-            tenantFields.classList.add('hidden');
+            TenantFields.classList.add('hidden');
         }
     });
 </script>

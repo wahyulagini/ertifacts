@@ -7,13 +7,13 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration
 {
     /**
-     * Jalankan migrasi pencatatan keuangan harian tenant.
+     * Jalankan migrasi pencatatan keuangan harian Tenant.
      */
     public function up(): void
     {
-        Schema::create('tenant_sales', function (Blueprint $table) {
+        Schema::create('Tenant_sales', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('tenant_id')->constrained('tenants')->onDelete('cascade');
+            $table->foreignId('Tenant_id')->constrained('Tenants')->onDelete('cascade');
             $table->decimal('total_omset', 12, 2);
             $table->decimal('jumlah_pajak', 12, 2); // Nilai bagi hasil otomatis yang dipotong untuk operasional
             $table->decimal('pendapatan_bersih', 12, 2);
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tenant_sales');
+        Schema::dropIfExists('Tenant_sales');
     }
 };

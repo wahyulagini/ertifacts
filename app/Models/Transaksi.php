@@ -10,7 +10,7 @@ class Transaksi extends Model
     protected $table = 'transaksi';
 
     protected $fillable = [
-        'user_id', 'reservasi_id', 'tenant_id',
+        'user_id', 'reservasi_id', 'Tenant_id',
         'jenis_transaksi', 'jumlah', 'kode_transaksi',
         'metode_bayar', 'status_bayar', 'keterangan', 'dibayar_pada',
     ];
@@ -31,7 +31,7 @@ class Transaksi extends Model
 
 public function user()       { return $this->belongsTo(User::class); }
 public function reservasi()  { return $this->belongsTo(Reservasi::class); }
-public function tenant()     { return $this->belongsTo(Tenant::class); }
+public function Tenant()     { return $this->belongsTo(Tenant::class); }
 public function pajakTenant(){ return $this->hasOne(PajakTenant::class); }
 
     public function getJumlahRpAttribute(): string

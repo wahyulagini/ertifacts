@@ -25,8 +25,8 @@ class DashboardController extends Controller
         try { $reservasi = Reservasi::where('user_id', $user->id)->latest()->take(5)->get(); }
         catch (\Exception $e) { $reservasi = collect(); }
 
-        try { $tenant_aktif = Tenant::where('status','aktif')->take(5)->get(); }
-        catch (\Exception $e) { $tenant_aktif = collect(); }
+        try { $Tenant_aktif = Tenant::where('status','aktif')->take(5)->get(); }
+        catch (\Exception $e) { $Tenant_aktif = collect(); }
 
         $stats = [
             'total_reservasi' => $reservasi->count(),
@@ -35,7 +35,7 @@ class DashboardController extends Controller
             'total_artefak'   => $this->safe(fn() => Artefak::count()),
         ];
 
-        return view('pengunjung.dashboard', compact('reservasi','stats','tenant_aktif'));
+        return view('pengunjung.dashboard', compact('reservasi','stats','Tenant_aktif'));
     }
 
     // ═══════════════════════════════════════
@@ -46,15 +46,15 @@ class DashboardController extends Controller
     try { $buku_tamu_terbaru = BukuTamu::latest()->take(6)->get(); }
     catch (\Exception $e) { $buku_tamu_terbaru = collect(); }
 
-    try { $tenant_pending = Tenant::where('status','menunggu')->with('user')->latest()->take(5)->get(); }
-    catch (\Exception $e) { $tenant_pending = collect(); }
+    try { $Tenant_pending = Tenant::where('status','menunggu')->with('user')->latest()->take(5)->get(); }
+    catch (\Exception $e) { $Tenant_pending = collect(); }
 
     $tiket_bulan = $this->safe(fn() => BukuTamu::where('status_bayar','lunas')
                     ->whereMonth('created_at', now()->month)
                     ->whereYear('created_at', now()->year)
                     ->sum('total_harga'));
 
-    $sewa_bulan  = $this->safe(fn() => Transaksi::where('jenis_transaksi','Sewa Tempat tenant')
+    $sewa_bulan  = $this->safe(fn() => Transaksi::where('jenis_transaksi','Sewa Tempat Tenant')
                     ->where('status_bayar','lunas')
                     ->whereMonth('created_at', now()->month)->sum('jumlah'));
 
@@ -65,29 +65,29 @@ class DashboardController extends Controller
     $stats = [
         'total_user'         => $this->safe(fn() => User::count()),
         'kunjungan_hari_ini' => $this->safe(fn() => BukuTamu::whereDate('created_at', today())->count()),
-        'tenant_aktif'       => $this->safe(fn() => Tenant::where('status','aktif')->count()),
+        'Tenant_aktif'       => $this->safe(fn() => Tenant::where('status','aktif')->count()),
 
         // Pendapatan museum = Tiket Masuk (BukuTamu) + Sewa Tenant + Tagihan Sewa Booth terkonfirmasi
         'pendapatan_bulan'   => $tiket_bulan + $sewa_bulan + $pajak_bulan,
 
-        'menunggu_tenant'    => $this->safe(fn() => Tenant::where('status','menunggu')->count()),
+        'menunggu_Tenant'    => $this->safe(fn() => Tenant::where('status','menunggu')->count()),
         'tiket_bulan'        => $tiket_bulan,
         'sewa_bulan'         => $sewa_bulan,
         'pajak_bulan'        => $pajak_bulan,
     ];
 
-    return view('admin.dashboard', compact('buku_tamu_terbaru','tenant_pending','stats'));
+    return view('admin.dashboard', compact('buku_tamu_terbaru','Tenant_pending','stats'));
 }
 
     // ═══════════════════════════════════════
-    // TENANT
+    // Tenant
     // ═══════════════════════════════════════
-   public function tenant()
+   public function Tenant()
 {
     $user   = Auth::user();
-    $tenant = null;
+    $Tenant = null;
 
-    try { $tenant = Tenant::where('user_id', $user->id)->first(); }
+    try { $Tenant = Tenant::where('user_id', $user->id)->first(); }
     catch (\Exception $e) {}
 
     $transaksi = collect();
@@ -100,23 +100,23 @@ class DashboardController extends Controller
         'pajak_belum_bayar' => 0,
     ];
 
-    if ($tenant) {
+    if ($Tenant) {
         try {
-            $transaksi  = Transaksi::where('tenant_id',$tenant->id)->with('pajakTenant')->latest()->take(8)->get();
-            $pajak_list = PajakTenant::where('tenant_id',$tenant->id)->latest()->get();
-            $pendapatan = Transaksi::where('tenant_id',$tenant->id)->where('status_bayar','lunas')->whereMonth('created_at',now()->month)->sum('jumlah');
-            $pajak      = PajakTenant::where('tenant_id',$tenant->id)->where('periode',now()->format('Y-m'))->sum('nominal_pajak');
+            $transaksi  = Transaksi::where('Tenant_id',$Tenant->id)->with('pajakTenant')->latest()->take(8)->get();
+            $pajak_list = PajakTenant::where('Tenant_id',$Tenant->id)->latest()->get();
+            $pendapatan = Transaksi::where('Tenant_id',$Tenant->id)->where('status_bayar','lunas')->whereMonth('created_at',now()->month)->sum('jumlah');
+            $pajak      = PajakTenant::where('Tenant_id',$Tenant->id)->where('periode',now()->format('Y-m'))->sum('nominal_pajak');
             $stats = [
-                'total_transaksi'   => Transaksi::where('tenant_id',$tenant->id)->count(),
+                'total_transaksi'   => Transaksi::where('Tenant_id',$Tenant->id)->count(),
                 'pendapatan_bulan'  => $pendapatan,
                 'pajak_bulan'       => $pajak,
                 'bersih_bulan'      => $pendapatan - $pajak,
-                'pajak_belum_bayar' => PajakTenant::where('tenant_id',$tenant->id)->where('status_bayar','belum_bayar')->sum('nominal_pajak'),
+                'pajak_belum_bayar' => PajakTenant::where('Tenant_id',$Tenant->id)->where('status_bayar','belum_bayar')->sum('nominal_pajak'),
             ];
         } catch (\Exception $e) {}
     }
 
-    return view('tenant.dashboard', compact('transaksi','stats','tenant','pajak_list'));
+    return view('Tenant.dashboard', compact('transaksi','stats','Tenant','pajak_list'));
 }
 
     // ═══════════════════════════════════════
@@ -127,7 +127,7 @@ class DashboardController extends Controller
         $user = Auth::user();
         $view = match($user->role) {
             'admin'  => 'admin.profil',
-            'tenant'  => 'tenant.profil',
+            'Tenant'  => 'Tenant.profil',
             default  => 'pengunjung.profil',
         };
         return view($view, compact('user'));
@@ -157,7 +157,7 @@ class DashboardController extends Controller
         $user->save();
         $route = match($user->role) {
             'admin'  => 'admin.dashboard',
-            'tenant'  => 'tenant.dashboard',
+            'Tenant'  => 'Tenant.dashboard',
             default  => 'pengunjung.dashboard',
         };
 

@@ -9,7 +9,7 @@
 </div>
 
 <div class="bg-white rounded-2xl border border-brand-200 p-5 mb-5">
-    <form action="{{ route('tenant.riwayat') }}" method="GET" class="flex flex-wrap items-end gap-3">
+    <form action="{{ route('Tenant.riwayat') }}" method="GET" class="flex flex-wrap items-end gap-3">
         <div>
             <label class="block text-xs font-semibold text-brand-600 mb-1">Dari Tanggal</label>
             <input type="date" name="dari" value="{{ request('dari') }}"
@@ -24,7 +24,7 @@
             Filter
         </button>
         @if(request('dari') || request('sampai'))
-            <a href="{{ route('tenant.riwayat') }}" class="text-xs text-brand-400 hover:text-brand-600 underline">Reset filter</a>
+            <a href="{{ route('Tenant.riwayat') }}" class="text-xs text-brand-400 hover:text-brand-600 underline">Reset filter</a>
         @endif
     </form>
 </div>

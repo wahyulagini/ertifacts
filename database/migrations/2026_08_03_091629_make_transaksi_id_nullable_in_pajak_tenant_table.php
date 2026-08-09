@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('pajak_tenant', function (Blueprint $table) {
+        Schema::table('pajak_Tenant', function (Blueprint $table) {
             $table->unsignedBigInteger('transaksi_id')->nullable()->change();
         });
     }
@@ -21,7 +21,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('pajak_tenant', function (Blueprint $table) {
+        Schema::table('pajak_Tenant', function (Blueprint $table) {
             $table->unsignedBigInteger('transaksi_id')->nullable(false)->change();
         });
     }

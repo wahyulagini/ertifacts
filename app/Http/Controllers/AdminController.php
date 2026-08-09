@@ -65,7 +65,7 @@ class AdminController extends Controller
         'aktif'    => Tenant::where('status','aktif')->count(),
         'ditolak'  => Tenant::where('status','ditolak')->count(),
     ];
-    return view('admin.Tenant', compact('Tenants','stats'));  // ✅
+    return view('admin.tenant', compact('Tenants','stats'));  // ✅
 }
 
     public function setujuTenant(Request $request, $id)

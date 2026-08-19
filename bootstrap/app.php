@@ -11,6 +11,9 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
+        // Trust all proxies (Railway, Heroku, etc. use reverse proxies)
+        $middleware->trustProxies(at: '*');
+
         // Daftarkan alias 'role' agar bisa dipakai di routes
         $middleware->alias([
             'role' => \App\Http\Middleware\RoleMiddleware::class,
